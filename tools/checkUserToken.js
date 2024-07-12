@@ -19,11 +19,10 @@ module.exports = (req, res, next) => {
     
         //good code
         //`SELECT * from users where password = ?`,
-        [myToken[1]],
+        //[myToken[1]],
         (error, results, fields) => {
-            const dbResultsLength = results.length
-            console.log('Resulsts: '+dbResultsLength)
-            if (error || dbResultsLength == '0') {
+            console.log('Results: ' + results)
+            if (error || results.length == '0') {
                 console.log('User NOT authorized')
                 console.log('DB Error: '+error)
                 //return callback(error);
