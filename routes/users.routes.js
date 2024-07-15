@@ -9,6 +9,8 @@ router.get("/getBlabbers", checkUser, usersController.getBlabbers);
 
 router.post("/ignore", checkUser, usersController.ignore);
 
+router.post("/listen", checkUser, usersController.listen);
+
 router.post("/register", usersController.register);
 
 router.get("/getUsers", checkUser, usersController.getUsers);

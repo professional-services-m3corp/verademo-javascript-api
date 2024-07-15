@@ -32,6 +32,22 @@ exports.ignore = (req, res, next) => {
   });
 };
 
+exports.listen = (req, res, next) => {
+  console.log('POST /users/listen')
+  console.log('Request Data: '+JSON.stringify(req.body))
+  blabberUser = req.body.blabberUsername;
+  usersService.listen(blabberUser, req.user, (error, results) => {
+    if (error) {
+      console.log(error);
+      return res.status(400).send({ success: 0, data: "Bad request" });
+    }
+    return res.status(200).send({
+      success: 1,
+      data: results,
+    });
+  });
+};
+
 exports.getBlabbers = (req, res, next) => {
   console.log('GET /users/getBlabbers')
   console.log('Request Data: '+JSON.stringify(req.body))

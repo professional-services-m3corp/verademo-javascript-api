@@ -56,6 +56,45 @@ catch (err) {
 }
 };
 
+exports.listen = (blabberUsername, username, callback) => {
+  try{
+    let sqlQuery = "INSERT INTO listeners (blabber, listener, status) values (?, ?, 'Active');";
+    console.log(sqlQuery);
+    db.query(sqlQuery, [blabberUsername, username], (error, results) => {
+      if (error) {
+        throw error
+      }
+      sqlQuery = "SELECT blab_name FROM users WHERE username = '" + blabberUsername + "'";
+      console.log(sqlQuery);
+      db.query(sqlQuery, (error, results) => {
+        if (results.length > 0 )        
+        {
+          console.log('result found');
+          /* START EXAMPLE VULNERABILITY */
+          let event = username + " started listening to " + blabberUsername + " (" + results[0].blab_name + ")";
+          sqlQuery = "INSERT INTO users_history (blabber, event) VALUES (\"" + username + "\", \"" + event + "\")";
+          console.log(sqlQuery);
+          db.query(sqlQuery, (error, results) => {
+            if (error)
+            {
+              throw error;
+            }
+            });
+          /* END EXAMPLE VULNERABILITY */
+        }
+        else{
+          throw error
+        }
+      });
+      return callback(null, results);
+    });
+  }
+  catch (err) {
+    console.error(err);
+    return callback(err);
+  }
+};
+
 exports.getBlabbers = (username, sort, callback) => {
   if (sort == null || sort.isEmpty()) {
     sort = "blab_name ASC";
