@@ -15,6 +15,26 @@ exports.getUsers = (callback) => {
   );
 };
 
+exports.getBlabbers = (username, sort, callback) => {
+  if (sort == null || sort.isEmpty()) {
+    sort = "blab_name ASC";
+}
+  const blabbersSql = "SELECT users.username," + " users.blab_name," + " users.created_at,"
+            + " SUM(if(listeners.listener=?, 1, 0)) as listeners,"
+            + " SUM(if(listeners.status='Active',1,0)) as listening"
+            + " FROM users LEFT JOIN listeners ON users.username = listeners.blabber"
+            + " WHERE users.username NOT IN (\"admin\",\"admin-totp\",?)" + " GROUP BY users.username" + " ORDER BY " + sort + ";";
+
+  db.query(blabbersSql, [username, username],
+    (error, results, fields) => {
+      if (error) {
+        return callback(error);
+      }
+      return callback(null, results);
+    }
+  );
+};
+
 exports.userLogin = (data, callback) => {
   let hashedPassword = md5(data.password)
   console.log('hashed pass: '+hashedPassword)

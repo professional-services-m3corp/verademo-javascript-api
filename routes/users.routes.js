@@ -5,6 +5,8 @@ var express = require("express");
 
 var router = express.Router();
 
+router.get("/getBlabbers", checkUser, usersController.getBlabbers);
+
 router.get("/getUsers", checkUser, usersController.getUsers);
 /**
  * @swagger
