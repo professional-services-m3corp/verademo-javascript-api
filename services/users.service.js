@@ -1,5 +1,7 @@
 const db = require("../config/db.config");
-const md5 = require("blueimp-md5");
+const crypto = require('crypto');
+const moment = require('moment')
+const speakeasy = require('speakeasy')
 const { error } = require("console");
 const { isJSDocNonNullableType } = require("typescript");
 
@@ -75,7 +77,7 @@ exports.getBlabbers = (username, sort, callback) => {
 };
 
 exports.userLogin = (data, callback) => {
-  let hashedPassword = md5(data.password)
+  let hashedPassword = crypto.createHash('md5').update(data.password).digest('hex')
   console.log('hashed pass: '+hashedPassword)
   db.query(
     //bad code - SQLi
@@ -83,7 +85,7 @@ exports.userLogin = (data, callback) => {
 
     //good code
     //`SELECT * from users where username = ? and password = ?,
-    [data.username, hashedPassword],
+    //[data.username, hashedPassword],
     (error, results, fields) => {
       if (error) {
         console.log('Error: '+error)
@@ -101,3 +103,49 @@ exports.userLogin = (data, callback) => {
     }
   );
 };
+
+exports.register = async (data, callback) => {
+  const username = data.username
+	const password = data.password
+	const cpassword = data.cpassword
+	const realName = data.realName
+	const blabName = data.blabName
+	
+  //
+	if (password !== cpassword) {
+		console.log("Password and Confirm Password do not match");
+		return callback(null, 'password error')
+	}
+
+	try {
+		// /* START EXAMPLE VULNERABILITY */
+		// // Execute the query
+		mysqlCurrentDateTime = moment().format("YYYY-MM-DD HH:mm:ss")
+
+		let query = "insert into users (username, password, totp_secret, created_at, real_name, blab_name) values(";
+		query += "'" + username + "',";
+		query += "'" + crypto.createHash('md5').update(password).digest("hex") + "',";
+		query += "'" + speakeasy.generateSecret({ length: 20 }).base32 + "',";
+		query += "'" + mysqlCurrentDateTime + "',";
+		query += "'" + realName + "',";
+		query += "'" + blabName + "'";
+		query += ");";
+		// START BAD CODE
+		console.log(query);
+		// END BAD CODE 
+
+		db.query(query, (error, results) => {
+      if (error)
+      {
+        throw error
+      }
+    });
+		return callback(null, [{'username': username}]);
+		// /* END EXAMPLE VULNERABILITY */
+
+		// emailUser(username);
+	} catch (err) {
+		console.error(err);
+    return callback(err);
+	}
+}

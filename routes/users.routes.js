@@ -9,6 +9,8 @@ router.get("/getBlabbers", checkUser, usersController.getBlabbers);
 
 router.get("/ignore", checkUser, usersController.ignore);
 
+router.post("/register", usersController.register);
+
 router.get("/getUsers", checkUser, usersController.getUsers);
 /**
  * @swagger

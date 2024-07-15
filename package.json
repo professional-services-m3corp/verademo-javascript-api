@@ -37,9 +37,12 @@
     "url-parse": "^1.5.3"
   },
   "dependencies": {
+    "crypto": "^1.0.1",
     "curling": "^0.3.0",
     "djv": "^2.1.2",
     "lodash": "^4.17.15",
+    "moment": "^2.30.1",
+    "speakeasy": "^2.0.0",
     "vm2": "^3.9.5"
   }
 }

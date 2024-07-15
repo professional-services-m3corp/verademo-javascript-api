@@ -81,3 +81,39 @@ exports.userLogin = (req, res, next) => {
     });
   });
 };
+
+exports.register = (req, res, next) => {
+  console.log('POST /users/register')
+  console.log('Request Data: '+JSON.stringify(req.body))
+
+  //check required parameters
+  if ( typeof req.body.username == 'undefined' || typeof req.body.password == 'undefined' ){
+    return res.status(400).send({
+      success: 1,
+      data: "One or more required parameters missing",
+    });
+  }
+
+  const data = {
+    username : req.body.username,
+    password : req.body.password,
+    cpassword : req.body.cpassword,
+    realName : req.body.realName,
+    blabName : req.body.blabName,
+  };
+
+  usersService.register(data, (error, results) => {
+    if (error) {
+      console.log(error);
+      return res.status(400).send({ success: 0, data: "Bad request" });
+    }
+    if( results == "password error")
+    {
+      return res.status(400).send({ success: 1, data: "The Password and Confirm Password values do not match. Please try again." })
+    }
+    return res.status(200).send({
+      success: 1,
+      data: results,
+    });
+  });
+};
