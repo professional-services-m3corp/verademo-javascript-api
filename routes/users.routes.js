@@ -7,7 +7,7 @@ var router = express.Router();
 
 router.get("/getBlabbers", checkUser, usersController.getBlabbers);
 
-router.get("/ignore", checkUser, usersController.ignore);
+router.post("/ignore", checkUser, usersController.ignore);
 
 router.post("/register", usersController.register);
 

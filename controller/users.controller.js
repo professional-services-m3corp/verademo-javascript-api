@@ -17,9 +17,9 @@ exports.getUsers = (req, res, next) => {
 };
 
 exports.ignore = (req, res, next) => {
-  console.log('GET /users/ignore')
+  console.log('POST /users/ignore')
   console.log('Request Data: '+JSON.stringify(req.body))
-  blabberUser = req.query.blabberUsername;
+  blabberUser = req.body.blabberUsername;
   usersService.ignore(blabberUser, req.user, (error, results) => {
     if (error) {
       console.log(error);
