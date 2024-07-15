@@ -1,5 +1,6 @@
 const db = require("../config/db.config");
 const md5 = require("blueimp-md5");
+const { error } = require("console");
 const { isJSDocNonNullableType } = require("typescript");
 
 exports.getUsers = (callback) => {
@@ -13,6 +14,44 @@ exports.getUsers = (callback) => {
       return callback(null, results);
     }
   );
+};
+exports.ignore = (blabberUsername, username, callback) => {
+  try{
+  let sqlQuery = "DELETE FROM listeners WHERE blabber=? AND listener=?;";
+  console.log(sqlQuery);
+  db.query(sqlQuery, [blabberUsername, username], (error, results) => {
+    if (error) {
+      throw error
+    }
+    sqlQuery = "SELECT blab_name FROM users WHERE username = '" + blabberUsername + "'";
+    console.log(sqlQuery);
+    db.query(sqlQuery, (error, results) => {
+      if (results.length > 0 )        
+      {
+        console.log('result found');
+        /* START EXAMPLE VULNERABILITY */
+        let event = username + " is now ignoring " + blabberUsername + " (" + results[0].blab_name + ")";
+        sqlQuery = "INSERT INTO users_history (blabber, event) VALUES (\"" + username + "\", \"" + event + "\")";
+        console.log(sqlQuery);
+        db.query(sqlQuery, (error, results) => {
+          if (error)
+          {
+            throw error;
+          }
+          });
+        /* END EXAMPLE VULNERABILITY */
+      }
+      else{
+        throw error
+      }
+    });
+    return callback(null, results);
+  });
+  }
+catch (err) {
+  console.error(err);
+  return callback(err);
+}
 };
 
 exports.getBlabbers = (username, sort, callback) => {

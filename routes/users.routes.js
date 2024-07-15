@@ -7,6 +7,8 @@ var router = express.Router();
 
 router.get("/getBlabbers", checkUser, usersController.getBlabbers);
 
+router.get("/ignore", checkUser, usersController.ignore);
+
 router.get("/getUsers", checkUser, usersController.getUsers);
 /**
  * @swagger
