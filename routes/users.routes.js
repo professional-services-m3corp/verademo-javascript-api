@@ -1,4 +1,5 @@
 const usersController = require("../controller/users.controller");
+const resetController = require("../controller/reset.controller.js")
 const checkUser = require("../tools/checkUserToken.js")
 
 var express = require("express");
@@ -18,6 +19,8 @@ router.post("/register", usersController.register);
 router.get("/getUsers", checkUser, usersController.getUsers);
 
 router.get("/getUser", checkUser, usersController.getUser);
+
+router.get("/reset", checkUser, resetController.reset);
 /**
  * @swagger
  * /users/getUsers:
