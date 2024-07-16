@@ -19,74 +19,36 @@ exports.getUsers = (callback) => {
 };
 exports.ignore = (blabberUsername, username, callback) => {
   try{
-  let sqlQuery = "DELETE FROM listeners WHERE blabber=? AND listener=?;";
-  console.log(sqlQuery);
-  db.query(sqlQuery, [blabberUsername, username], (error, results) => {
-    if (error) {
-      throw error
-    }
-    sqlQuery = "SELECT blab_name FROM users WHERE username = '" + blabberUsername + "'";
-    console.log(sqlQuery);
-    db.query(sqlQuery, (error, results) => {
-      if (results.length > 0 )        
-      {
-        console.log('result found');
-        /* START EXAMPLE VULNERABILITY */
-        let event = username + " is now ignoring " + blabberUsername + " (" + results[0].blab_name + ")";
-        sqlQuery = "INSERT INTO users_history (blabber, event) VALUES (\"" + username + "\", \"" + event + "\")";
-        console.log(sqlQuery);
-        db.query(sqlQuery, (error, results) => {
-          if (error)
-          {
-            throw error;
-          }
-          });
-        /* END EXAMPLE VULNERABILITY */
-      }
-      else{
-        throw error
-      }
-    });
-    return callback(null, results);
-  });
-  }
-catch (err) {
-  console.error(err);
-  return callback(err);
-}
-};
-
-exports.listen = (blabberUsername, username, callback) => {
-  try{
-    let sqlQuery = "INSERT INTO listeners (blabber, listener, status) values (?, ?, 'Active');";
+    let sqlQuery = "DELETE FROM listeners WHERE blabber=? AND listener=?;";
     console.log(sqlQuery);
     db.query(sqlQuery, [blabberUsername, username], (error, results) => {
       if (error) {
-        throw error
+        return callback(error);
       }
       sqlQuery = "SELECT blab_name FROM users WHERE username = '" + blabberUsername + "'";
       console.log(sqlQuery);
       db.query(sqlQuery, (error, results) => {
+        if(error){
+          return callback(error);
+        }
         if (results.length > 0 )        
         {
           console.log('result found');
           /* START EXAMPLE VULNERABILITY */
-          let event = username + " started listening to " + blabberUsername + " (" + results[0].blab_name + ")";
-          sqlQuery = "INSERT INTO users_history (blabber, event) VALUES (\"" + username + "\", \"" + event + "\")";
+          let event = username + " is now ignoring " + blabberUsername + " (" + results[0].blab_name + ")";
+          sqlQuery = "INSERT tINTO users_history (blabber, event) VALUES (\"" + username + "\", \"" + event + "\")";
           console.log(sqlQuery);
           db.query(sqlQuery, (error, results) => {
             if (error)
             {
-              throw error;
+              return callback(error);
             }
+            return callback(null, 'query success');
             });
+            
           /* END EXAMPLE VULNERABILITY */
         }
-        else{
-          throw error
-        }
       });
-      return callback(null, results);
     });
   }
   catch (err) {
@@ -95,10 +57,136 @@ exports.listen = (blabberUsername, username, callback) => {
   }
 };
 
+exports.listen = (blabberUsername, username, callback) => {
+  try{
+    let sqlQuery = "INSERT INTO listeners (blabber, listener, status) values (?, ?, 'Active');";
+    console.log(sqlQuery);
+    db.query(sqlQuery, [blabberUsername, username], (error, results) => {
+      if (error) {
+        return callback(error);
+      }
+      sqlQuery = "SELECT blab_name FROM users WHERE username = '" + blabberUsername + "'";
+      console.log(sqlQuery);
+      db.query(sqlQuery, (error, results) => {
+        if(error){
+          return callback(error);
+        }
+        if (results.length > 0 ){
+          console.log('result found');
+          /* START EXAMPLE VULNERABILITY */
+          let event = username + " started listening to " + blabberUsername + " (" + results[0].blab_name + ")";
+          sqlQuery = "INSERT INTO users_history (blabber, event) VALUES (\"" + username + "\", \"" + event + "\")";
+          console.log(sqlQuery);
+          db.query(sqlQuery, (error, results) => {
+            if (error){
+              return callback(error);
+            }
+            return callback(null, results);
+          });
+          /* END EXAMPLE VULNERABILITY */
+        }
+        else{
+          throw error;
+        }
+      });
+    });
+  }
+  catch (err) {
+    console.error(err);
+    return callback(err);
+  }
+};
+
+exports.getListeners = (username, callback) => {
+  locals = {
+    hecklers:'',
+    events:'',
+    username:'',
+    realName:'',
+    blabName:'',
+    totpSecret:''
+  };
+  
+  let sqlMyHecklers = "SELECT users.username, users.blab_name, users.created_at "
+				+ "FROM users LEFT JOIN listeners ON users.username = listeners.listener "
+				+ "WHERE listeners.blabber=? AND listeners.status='Active';";
+
+  try
+  {
+    console.log(sqlMyHecklers);
+    // First way of making query using forEach loop, which requires promise statement
+    // to combat asyncronous errors.
+    db.query(sqlMyHecklers, [username],
+      (error, results) => {
+        if (error) {
+          throw error;
+        }
+        new Promise((resolve, reject) => {
+          temp = [];
+          try{
+            results.forEach((heckler) => {
+              let blabber = new Blabber();
+              blabber.setUsername(heckler['username']);
+              blabber.setBlabName(heckler['blab_name']);
+              blabber.setCreatedDate(heckler['created_at']);
+              blabber.getCreatedDateString();
+              // START BAD CODE
+              temp.push(blabber);
+              // END BAD CODE
+              /* START GOOD CODE
+              hecklers.push(new Blabber(JSON.stringify(blabber));
+                    */// END GOOD CODE
+            });
+            resolve(temp)
+          }
+          catch{
+            reject([])
+          }
+        }).then((hecklers) => {locals.hecklers = hecklers;})
+      }
+    );
+    let events = [];
+		let sqlMyEvents = "select event from users_history where blabber=\"" + username
+				+ "\" ORDER BY eventid DESC; ";
+		console.log(sqlMyEvents);
+    //Second way of making query using regular for loop
+		db.query(sqlMyEvents, (error, results) => {
+      if(error){
+        throw error;
+      }
+      for (const event of results){
+        events.push(event['event']);
+      }
+      locals.events = events;
+    });
+    let sql = "SELECT username, real_name, blab_name, totp_secret FROM users WHERE username = '" + username + "'";
+		console.log(sql);
+
+		db.query(sql, (error, results) => {
+      if(error)
+      {
+        return callback(error);
+      }
+      let myInfoResults = results;
+      locals.username = myInfoResults[0]['username'];
+		  locals.realName = myInfoResults[0]['real_name'];
+		  locals.blabName = myInfoResults[0]['blab_name'];
+		  locals.totpSecret = myInfoResults[0]['totp_secret'];
+    });
+
+    return callback(null, locals)
+  } catch (err) 
+  {
+    console.log(err);
+    return callback(err);
+  }
+};
+
 exports.getBlabbers = (username, sort, callback) => {
+
   if (sort == null || sort.isEmpty()) {
     sort = "blab_name ASC";
-}
+  }
   const blabbersSql = "SELECT users.username," + " users.blab_name," + " users.created_at,"
             + " SUM(if(listeners.listener=?, 1, 0)) as listeners,"
             + " SUM(if(listeners.status='Active',1,0)) as listening"
@@ -174,17 +262,16 @@ exports.register = async (data, callback) => {
 		// END BAD CODE 
 
 		db.query(query, (error, results) => {
-      if (error)
-      {
-        throw error
+      if (error){
+        console.log('error occurred');
+        return callback(error);
       }
+      return callback(null, [{'username': username}]);
     });
-		return callback(null, [{'username': username}]);
 		// /* END EXAMPLE VULNERABILITY */
-
-		// emailUser(username);
 	} catch (err) {
-		console.error(err);
+    console.log('error caught');
+		// console.error(err);
     return callback(err);
 	}
 }

@@ -11,6 +11,8 @@ router.post("/ignore", checkUser, usersController.ignore);
 
 router.post("/listen", checkUser, usersController.listen);
 
+router.get("/getListeners", checkUser, usersController.getListeners);
+
 router.post("/register", usersController.register);
 
 router.get("/getUsers", checkUser, usersController.getUsers);
