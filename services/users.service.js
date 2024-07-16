@@ -36,7 +36,7 @@ exports.ignore = (blabberUsername, username, callback) => {
           console.log('result found');
           /* START EXAMPLE VULNERABILITY */
           let event = username + " is now ignoring " + blabberUsername + " (" + results[0].blab_name + ")";
-          sqlQuery = "INSERT tINTO users_history (blabber, event) VALUES (\"" + username + "\", \"" + event + "\")";
+          sqlQuery = "INSERT INTO users_history (blabber, event) VALUES (\"" + username + "\", \"" + event + "\")";
           console.log(sqlQuery);
           db.query(sqlQuery, (error, results) => {
             if (error)
