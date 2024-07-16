@@ -16,6 +16,21 @@ exports.getUsers = (req, res, next) => {
   });
 };
 
+exports.getUser = (req, res, next) => {
+  console.log('GET /users/getUser')
+  console.log('Request Data: '+JSON.stringify(req.body))
+  usersService.getUser(req.user, (error, results) => {
+    if (error) {
+      console.log(error);
+      return res.status(400).send({ success: 0, data: "Bad request" });
+    }
+    return res.status(200).send({
+      success: 1,
+      data: results,
+    });
+  });
+};
+
 exports.ignore = (req, res, next) => {
   console.log('POST /users/ignore')
   console.log('Request Data: '+JSON.stringify(req.body))

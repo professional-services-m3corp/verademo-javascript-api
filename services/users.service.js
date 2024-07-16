@@ -17,6 +17,21 @@ exports.getUsers = (callback) => {
     }
   );
 };
+
+exports.getUser = (username, callback) => {
+  db.query(
+    "select * from users where username='" + username + "';",
+
+    (error, results, fields) => {
+      if (error) {
+        return callback(error);
+      }
+      return callback(null, results);
+    }
+  );
+}
+
+
 exports.ignore = (blabberUsername, username, callback) => {
   try{
     let sqlQuery = "DELETE FROM listeners WHERE blabber=? AND listener=?;";

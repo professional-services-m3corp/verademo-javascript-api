@@ -16,6 +16,8 @@ router.get("/getListeners", checkUser, usersController.getListeners);
 router.post("/register", usersController.register);
 
 router.get("/getUsers", checkUser, usersController.getUsers);
+
+router.get("/getUser", checkUser, usersController.getUser);
 /**
  * @swagger
  * /users/getUsers:
