@@ -98,7 +98,7 @@ exports.listen = (blabberUsername, username, callback) => {
 };
 
 exports.getListeners = (username, callback) => {
-  locals = {
+  let locals = {
     hecklers:'',
     events:'',
     username:'',
@@ -116,65 +116,80 @@ exports.getListeners = (username, callback) => {
     console.log(sqlMyHecklers);
     // First way of making query using forEach loop, which requires promise statement
     // to combat asyncronous errors.
-    db.query(sqlMyHecklers, [username],
-      (error, results) => {
-        if (error) {
-          throw error;
+    console.log("creating promise statements");
+    hecklerPromise = new Promise((resolve, reject) => {
+      db.query(sqlMyHecklers, [username],
+        (error, results) => {
+          if (error) {
+            reject(error);
+          }
+          console.log('creating forEach promise');
+          new Promise((myResolve, myReject) => {
+            temp = [];
+            try{
+              results.forEach((heckler) => {
+                let blabber = {
+                  'username': heckler['username'],
+                  'blab_name': heckler['blab_name'],
+                  'created_at': heckler['created_at'],
+                }
+                temp.push(blabber);
+                
+              });
+              myResolve(temp)
+            }
+            catch{
+              myReject('forEach statement broke')
+            }
+          }).then((hecklers) => {locals.hecklers = hecklers; resolve();}, (error) => {reject(error)})
         }
-        new Promise((resolve, reject) => {
-          temp = [];
-          try{
-            results.forEach((heckler) => {
-              let blabber = new Blabber();
-              blabber.setUsername(heckler['username']);
-              blabber.setBlabName(heckler['blab_name']);
-              blabber.setCreatedDate(heckler['created_at']);
-              blabber.getCreatedDateString();
-              // START BAD CODE
-              temp.push(blabber);
-              // END BAD CODE
-              /* START GOOD CODE
-              hecklers.push(new Blabber(JSON.stringify(blabber));
-                    */// END GOOD CODE
-            });
-            resolve(temp)
-          }
-          catch{
-            reject([])
-          }
-        }).then((hecklers) => {locals.hecklers = hecklers;})
-      }
-    );
-    let events = [];
-		let sqlMyEvents = "select event from users_history where blabber=\"" + username
-				+ "\" ORDER BY eventid DESC; ";
-		console.log(sqlMyEvents);
-    //Second way of making query using regular for loop
-		db.query(sqlMyEvents, (error, results) => {
-      if(error){
-        throw error;
-      }
-      for (const event of results){
-        events.push(event['event']);
-      }
-      locals.events = events;
-    });
-    let sql = "SELECT username, real_name, blab_name, totp_secret FROM users WHERE username = '" + username + "'";
-		console.log(sql);
+      );
+    })
+    // set .then executables if promise resolves or rejects
+  
+    eventPromise = new Promise((resolve, reject) => {
+      let events = [];
+      let sqlMyEvents = "select event from users_history where blabber=\"" + username
+          + "\" ORDER BY eventid DESC; ";
+		  console.log(sqlMyEvents);
+      //Second way of making query using regular for loop
+      db.query(sqlMyEvents, (error, results) => {
+        if(error){
+          reject(error);
+        }
+        for (const item of results)
+        {
+          events.push(item['event']);
+        }
+        locals.events = events
+      });
+      resolve();
+    })
 
-		db.query(sql, (error, results) => {
-      if(error)
-      {
-        return callback(error);
-      }
-      let myInfoResults = results;
-      locals.username = myInfoResults[0]['username'];
-		  locals.realName = myInfoResults[0]['real_name'];
-		  locals.blabName = myInfoResults[0]['blab_name'];
-		  locals.totpSecret = myInfoResults[0]['totp_secret'];
+    otherLocals = new Promise((resolve, reject) => {
+      let sql = "SELECT username, real_name, blab_name, totp_secret FROM users WHERE username = '" + username + "'";
+      console.log(sql);
+  
+      db.query(sql, (error, results) => {
+        if(error)
+        {
+          reject(error);
+        }
+        let myInfoResults = results;
+        locals.username = myInfoResults[0]['username'];
+        locals.realName = myInfoResults[0]['real_name'];
+        locals.blabName = myInfoResults[0]['blab_name'];
+        locals.totpSecret = myInfoResults[0]['totp_secret'];
+      });
+      resolve();
     });
 
-    return callback(null, locals)
+    return Promise.all([
+      hecklerPromise,
+      eventPromise,
+      otherLocals
+    ]).then(() => {return callback(null, locals);})
+    .catch((error) => {return callback(error);})
   } catch (err) 
   {
     console.log(err);
