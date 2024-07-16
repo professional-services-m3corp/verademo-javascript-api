@@ -5,6 +5,10 @@ var express = require("express");
 
 var router = express.Router();
 
+router.post("/getBlabsForMe", checkUser, postsController.getBlabsForMe);
+
+router.post("/getBlabsByMe", checkUser, postsController.getBlabsByMe);
+
 router.post("/addBlab", checkUser, postsController.addBlab);
 /**
  * @swagger
