@@ -111,8 +111,6 @@ exports.getListeners = (username, callback) => {
 				+ "FROM users LEFT JOIN listeners ON users.username = listeners.listener "
 				+ "WHERE listeners.blabber=? AND listeners.status='Active';";
 
-  try
-  {
     console.log(sqlMyHecklers);
     // First way of making query using forEach loop, which requires promise statement
     // to combat asyncronous errors.
@@ -169,19 +167,21 @@ exports.getListeners = (username, callback) => {
     otherLocals = new Promise((resolve, reject) => {
       let sql = "SELECT username, real_name, blab_name, totp_secret FROM users WHERE username = '" + username + "'";
       console.log(sql);
-  
       db.query(sql, (error, results) => {
         if(error)
         {
           reject(error);
         }
-        let myInfoResults = results;
-        locals.username = myInfoResults[0]['username'];
-        locals.realName = myInfoResults[0]['real_name'];
-        locals.blabName = myInfoResults[0]['blab_name'];
-        locals.totpSecret = myInfoResults[0]['totp_secret'];
+        else{
+          
+          let myInfoResults = results;
+          locals.username = myInfoResults[0]['username'];
+          locals.realName = myInfoResults[0]['real_name'];
+          locals.blabName = myInfoResults[0]['blab_name'];
+          locals.totpSecret = myInfoResults[0]['totp_secret'];
+          resolve();
+        }
       });
-      resolve();
     });
 
     return Promise.all([
@@ -190,11 +190,6 @@ exports.getListeners = (username, callback) => {
       otherLocals
     ]).then(() => {return callback(null, locals);})
     .catch((error) => {return callback(error);})
-  } catch (err) 
-  {
-    console.log(err);
-    return callback(err);
-  }
 };
 
 exports.getBlabbers = (username, sort, callback) => {
