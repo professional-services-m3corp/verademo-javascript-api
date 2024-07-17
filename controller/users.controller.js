@@ -79,11 +79,11 @@ exports.getBlabbers = (req, res, next) => {
   });
 };
 
-exports.getListeners = (req, res, next) => {
+exports.getProfileInfo = (req, res, next) => {
   console.log('GET /users/getListeners')
   console.log('Request Data: '+JSON.stringify(req.body))
 
-  usersService.getListeners(req.user, (error, results) => {
+  usersService.getProfileInfo(req.user, (error, results) => {
     if (error) {
       console.log(error);
       return res.status(400).send({ success: 0, data: "Bad request" });
