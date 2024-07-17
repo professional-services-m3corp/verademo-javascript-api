@@ -1,9 +1,11 @@
 const moment = require('moment')
 const fs = require('fs');
-const db = require("../config/db.config");
-const User = require('../utils/User.js');
+const { db,getConnection,query } = require("../config/db.config");
+const User = require('../tools/User.js');
 const readline = require('readline');
 const util = require('util');
+
+
 exports.reset = (callback) =>{
     const users = [
         User.create("admin", "admin", "Mr. Administrator"),
@@ -40,8 +42,17 @@ exports.reset = (callback) =>{
         User.create("stuart", "Stuart", "Stuart Sessions"),
         User.create("scottsim", "Scott Simpson", "Scott Simpson")
     ];
-
-    return exec(processReset(users));
+    processReset(users, (result) => {
+        console.log('Reset: '+ result);
+        if(result == "Success")
+        {
+            return callback(null, result);
+        }
+        else{
+            return callback(result);
+        }
+    });
+    
 }
 
 async function recreateDatabaseSchema() {
@@ -69,14 +80,15 @@ async function recreateDatabaseSchema() {
             sql = sql.trim();
             if (sql) {
                 console.log("Executing: " + sql);
-                await db.query(sql);
+                await query(sql);
             }
         }
     } catch (err) {
         console.error(err);
     } 
 }
-async function processReset(users) {
+async function processReset(users, callback) {
+
 
     console.log("Entering processReset");
 
@@ -87,7 +99,7 @@ async function processReset(users) {
         console.log("Getting Database connection");
         // Get the Database Connection
         // Class.forName("com.mysql.jdbc.Driver");
-        let connect = await db.getConnection();
+        let connect = await getConnection();
         const pBeginTransaction = await util.promisify(connect.beginTransaction).bind(connect);
         const pQuery = await util.promisify(connect.query).bind(connect);
         const pCommit = await util.promisify(connect.commit).bind(connect);
@@ -118,6 +130,7 @@ async function processReset(users) {
                 console.error("Error loading data, reverting changes: ", err);
                 await pRollback();
                 pRelease();
+                return callback(err);
             }
             // Adding listeners
             try {
@@ -142,10 +155,11 @@ async function processReset(users) {
                 console.error("Error loading data, reverting changes: ", err);
                 await pRollback();
                 pRelease();
+                return callback(err);
             }
             // Fetching blabs
             console.log("Reading blabs from file");
-            let blabsContent = fs.readFileSync("resources/files/blabs.txt", 'utf8').split('\n');
+            let blabsContent = fs.readFileSync("files/blabs.txt", 'utf8').split('\n');
                 
             console.log(blabsContent)
 
@@ -168,12 +182,13 @@ async function processReset(users) {
                 console.error("Error loading data, reverting changes: ", err);
                 await pRollback();
                 pRelease();
+                return callback(err);
             } 
             // Comments
             try {
                 // Fetching comments
                 console.log("Reading comments from file");
-                let commentsContent = fs.readFileSync("resources/files/comments.txt", 'utf8').split('\n');
+                let commentsContent = fs.readFileSync("files/comments.txt", 'utf8').split('\n');
                 // Adding comments
                 console.log("Preparing the statement for adding comments");
                 let count, randomUser, username, commentNum, comment, vary;
@@ -196,20 +211,23 @@ async function processReset(users) {
                 await pCommit();
                 pRelease();
                 console.log("Success!");
+                return callback("Success"); //Success
             } catch (err) {
                 console.error("Error loading data, reverting changes: ", err);
                 await pRollback();
                 pRelease();
+                return callback(err);
             }
         } catch (err) {
             console.error("Error loading data, reverting changes: ", err);
             await pRollback();
             pRelease();
+            return callback(err);
         }
     } catch (err) {
         console.error(err);
-        return "callback(error);"; //Error
+        return callback(err); //Error
     }
-    return "callback(null, \"Reset Successful\");"; //Success
+    
 }
 

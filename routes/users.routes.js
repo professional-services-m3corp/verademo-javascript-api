@@ -20,7 +20,7 @@ router.get("/getUsers", checkUser, usersController.getUsers);
 
 router.get("/getUser", checkUser, usersController.getUser);
 
-router.get("/reset", checkUser, resetController.reset);
+router.get("/reset", /*checkUser,*/ resetController.reset);
 /**
  * @swagger
  * /users/getUsers:

@@ -1,4 +1,6 @@
 const { createPool } = require("mysql");
+const util = require('util');
+
 const db = createPool({
   port: 3306,
   host: "verademo-javascript-api-db-1",
@@ -7,4 +9,8 @@ const db = createPool({
   database: "blab",
   connectionLimit: 10,
 });
-module.exports = db;
+
+const getConnection = util.promisify(db.getConnection).bind(db);
+const query = util.promisify(db.query).bind(db);
+
+module.exports = { db, getConnection, query };

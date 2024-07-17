@@ -1,4 +1,4 @@
-const db = require("../config/db.config");
+const {db} = require("../config/db.config");
 
 module.exports = (req, res, next) => {
     const authHeader = req.headers['authorization']
