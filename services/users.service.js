@@ -112,7 +112,7 @@ exports.listen = (blabberUsername, username, callback) => {
   }
 };
 
-exports.getListeners = (username, callback) => {
+exports.getProfileInfo = (username, callback) => {
   let locals = {
     hecklers:'',
     events:'',

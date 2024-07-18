@@ -12,7 +12,7 @@ router.post("/ignore", checkUser, usersController.ignore);
 
 router.post("/listen", checkUser, usersController.listen);
 
-router.get("/getListeners", checkUser, usersController.getListeners);
+router.get("/getProfileInfo", checkUser, usersController.getProfileInfo);
 
 router.post("/register", usersController.register);
 
@@ -20,7 +20,7 @@ router.get("/getUsers", checkUser, usersController.getUsers);
 
 router.get("/getUser", checkUser, usersController.getUser);
 
-router.get("/reset", /*checkUser,*/ resetController.reset);
+router.get("/reset", checkUser, resetController.reset);
 /**
  * @swagger
  * /users/getUsers:
