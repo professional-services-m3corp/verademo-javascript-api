@@ -10,12 +10,13 @@ module.exports = (req, res, next) => {
     console.log("===========================")
     console.log(myToken[1])
     console.log("===========================")
-
+    const creds = myToken[1].split('_')
 
 
     db.query(
+        
         //bad code - SQLi
-        `SELECT * from users where password='`+myToken[1]+`'`,
+        `SELECT * from users where username='`+creds[0]+`' and password='`+creds[1]+`'`,
     
         //good code
         //`SELECT * from users where password = ?`,
