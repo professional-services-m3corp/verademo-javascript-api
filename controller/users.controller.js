@@ -80,7 +80,7 @@ exports.getBlabbers = (req, res, next) => {
 };
 
 exports.getProfileInfo = (req, res, next) => {
-  console.log('GET /users/getListeners')
+  console.log('GET /users/getProfileInfo')
   console.log('Request Data: '+JSON.stringify(req.body))
 
   usersService.getProfileInfo(req.user, (error, results) => {
