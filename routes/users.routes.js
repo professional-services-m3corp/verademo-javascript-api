@@ -14,6 +14,8 @@ router.post("/listen", checkUser, usersController.listen);
 
 router.get("/getProfileInfo", checkUser, usersController.getProfileInfo);
 
+router.post("/updateProfile", checkUser, usersController.updateProfile);
+
 router.post("/register", usersController.register);
 
 router.get("/getUsers", checkUser, usersController.getUsers);

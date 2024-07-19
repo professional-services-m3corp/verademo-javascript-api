@@ -95,6 +95,36 @@ exports.getProfileInfo = (req, res, next) => {
   });
 };
 
+exports.updateProfile = (req, res, next) => {
+  console.log('GET /users/updateProfile')
+  console.log('Request Data: '+JSON.stringify(req.body))
+
+  //check required parameters
+  if ( !req.body.username || !req.body.blabName || !req.body.realName ) {
+    return res.status(400).send({
+      success: 1,
+      data: "One or more required parameters missing",
+    });
+  }
+
+  const data = {
+    oldUsername: req.user,
+    username: req.body.username,
+    blabName: req.body.blabName,
+    realName: req.body.realName,
+  }
+
+  usersService.updateProfile(data, (error, results) => {
+    if (error) {
+      console.log(error);
+      return res.status(400).send({ success: 0, data: error });
+    }
+    return res.status(200).send({
+      success: 1,
+      data: results,
+    });
+  });
+};
 
 exports.userLogin = (req, res, next) => {
   console.log('POST /users/login')

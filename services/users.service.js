@@ -1,6 +1,7 @@
-const db = require("../config/db.config");
+const { db, getConnection, query } = require("../config/db.config");
 const crypto = require('crypto');
 const moment = require('moment')
+const util = require('util');
 const speakeasy = require('speakeasy')
 const { error } = require("console");
 const { isJSDocNonNullableType } = require("typescript");
@@ -206,6 +207,109 @@ exports.getProfileInfo = (username, callback) => {
     ]).then(() => {return callback(null, locals);})
     .catch((error) => {return callback(error);})
 };
+
+exports.updateProfile = async (data, callback) => {
+  let oldUsername = data.oldUsername;
+  const username = data.username;
+  const realName = data.realName;
+  const blabName = data.blabName;
+  let response;
+
+	try {
+		console.log("Executing the update Prepared Statement");
+		let updateResult = await query("UPDATE users SET real_name=?, blab_name=? WHERE username=?;", [realName, blabName, oldUsername])
+		
+		if (updateResult.affectedRows != 1) {
+			// await response.set('content-type', 'application/json');
+			// return response.status(500).send("{\"message\": \"<script>alert('An error occurred, please try again.');</script>\"}");
+      return callback("An error occurred, please try again.");
+    }
+	} catch (err) {
+		console.error(err);
+	}
+
+	// Rename profile image if username changes
+	if (!(username == oldUsername)) {
+		// Check if username exists
+		let exists = false;
+		let newUsername = username.toLowerCase();
+		try {
+			console.log("Preparing the duplicate username check Prepared Statement");
+			let result = await query("SELECT username FROM users WHERE username=?", [newUsername])
+			if (result.length != 0) {
+				console.info("Username: " + username + " already exists. Try again.");
+				exists = true;
+			}
+		} catch (err) {
+			console.error(err);
+		}
+		if (exists) {
+			// await response.set('content-type', 'application/json');
+			// return response.status(409).send("{\"message\": \"<script>alert('That username already exists. Please try another.');</script>\"}");
+      return callback("That username already exists. Please try another.")
+    }
+
+		// Attempt to update username
+		oldUsername = oldUsername.toLowerCase();
+		let sqlUpdateQueries = [];
+		let renamed = false;
+		try {
+			let connect = await getConnection();
+			const pBeginTransaction = util.promisify(connect.beginTransaction).bind(connect);
+			const pQuery = util.promisify(connect.query).bind(connect);
+			const pCommit = util.promisify(connect.commit).bind(connect);
+			const pRollback = util.promisify(connect.rollback).bind(connect);
+			const pRelease = util.promisify(connect.release).bind(connect);
+
+			let sqlStrQueries = ["UPDATE users SET username=? WHERE username=?",
+								"UPDATE blabs SET blabber=? WHERE blabber=?",
+								"UPDATE comments SET blabber=? WHERE blabber=?",
+								"UPDATE listeners SET blabber=? WHERE blabber=?",
+								"UPDATE listeners SET listener=? WHERE listener=?",
+								"UPDATE users_history SET blabber=? WHERE blabber=?"];
+			
+			try {
+				await pBeginTransaction();
+				try {
+					for (strQuery of sqlStrQueries) {
+						console.log("Preparing the Prepared Statement: " + strQuery)
+						await pQuery(strQuery, [newUsername, oldUsername])
+					}
+
+					await pCommit();
+					pRelease();
+				} catch (err) {
+					console.error("Error loading data, reverting changes: ", err);
+					await pRollback();
+					pRelease();
+				}
+			} catch (err) {
+				console.error("Error starting a transaction: ", err);
+				await pRollback();
+				pRelease();
+			}
+    
+			renamed = true;
+		} catch (err) {
+			console.error(err);
+		} 
+		if (!renamed) {
+			// await response.set('content-type', 'application/json');
+			// return response.status(500).send("{\"message\": \"<script>alert('An error occurred, please try again.');</script>\"}");
+      return callback("An error occurred, please try again.");
+    }
+	}
+
+	// let msg = `Successfully changed values!\\\\nusername: ${username.toLowerCase()}\\\\nReal Name: ${realName}\\\\nBlab Name: ${blabName}`;
+	// response = `{\"values\": {\"username\": \"${username.toLowerCase()}\", \"realName\": \"${realName}\", \"blabName\": \"${blabName}\"}, \"message\": \"<script>alert('`
+	// 		+ msg + `');</script>\"}`;
+
+	// await response.set('content-type', 'application/json');
+	return callback(null, {"message": "Successfully changed values!",
+                         "username": username.toLowerCase(), 
+                         "realName": realName,
+                         "blabName": blabName })
+}
 
 exports.getBlabbers = (username, sort, callback) => {
 
