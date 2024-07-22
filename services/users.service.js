@@ -208,6 +208,24 @@ exports.getProfileInfo = (username, callback) => {
     .catch((error) => {return callback(error);})
 };
 
+exports.getEvents = (username, callback) => {
+  let events = [];
+    let sqlMyEvents = "select event from users_history where blabber=\"" + username
+        + "\" ORDER BY eventid DESC; ";
+    console.log(sqlMyEvents);
+    //Second way of making query using regular for loop
+    db.query(sqlMyEvents, (error, results) => {
+      if(error){
+        return callback(error);
+      }
+      for (const item of results)
+      {
+        events.push(item['event']);
+      }
+      return callback(null, events)
+    });
+};
+
 exports.updateProfile = async (data, callback) => {
   let oldUsername = data.oldUsername;
   const username = data.username;
