@@ -34,8 +34,13 @@ exports.getUser = (req, res, next) => {
 exports.ignore = (req, res, next) => {
   console.log('POST /users/ignore')
   console.log('Request Data: '+JSON.stringify(req.body))
-  blabberUser = req.body.blabberUsername;
-  usersService.ignore(blabberUser, req.user, (error, results) => {
+  if ( typeof req.body.blabberUsername == 'undefined'){
+    return res.status(400).send({
+      success: 1,
+      data: "One or more required parameters missing",
+    });
+  }
+  usersService.ignore(req.body.blabberUsername, req.user, (error, results) => {
     if (error) {
       console.log(error);
       return res.status(400).send({ success: 0, data: "Bad request" });
@@ -50,8 +55,13 @@ exports.ignore = (req, res, next) => {
 exports.listen = (req, res, next) => {
   console.log('POST /users/listen')
   console.log('Request Data: '+JSON.stringify(req.body))
-  blabberUser = req.body.blabberUsername;
-  usersService.listen(blabberUser, req.user, (error, results) => {
+  if ( typeof req.body.blabberUsername == 'undefined'){
+    return res.status(400).send({
+      success: 1,
+      data: "One or more required parameters missing",
+    });
+  }
+  usersService.listen(req.body.blabberUsername, req.user, (error, results) => {
     if (error) {
       console.log(error);
       return res.status(400).send({ success: 0, data: "Bad request" });

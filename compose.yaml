@@ -12,7 +12,7 @@ services:
     depends_on:
       - db
     develop:
-      watch: # Watch currently does not track properly, likely due to some pathing error
+      watch:
         - path: package.json
           action: rebuild
         - path: ./

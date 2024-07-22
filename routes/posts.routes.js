@@ -5,9 +5,39 @@ var express = require("express");
 
 var router = express.Router();
 
-router.post("/getBlabsForMe", checkUser, postsController.getBlabsForMe);
+router.get("/getBlabsForMe", checkUser, postsController.getBlabsForMe);
+/**
+ * @swagger
+ * /posts/getBlabsForMe:
+ *   get:
+ *      description: Get blabs written for user
+ *      tags:
+ *          - blabs
+ *      responses:
+ *          '200':
+ *              description: Resource added successfully
+ *          '500':
+ *              description: Internal server error
+ *          '400':
+ *              description: Bad request
+ */
 
-router.post("/getBlabsByMe", checkUser, postsController.getBlabsByMe);
+router.get("/getBlabsByMe", checkUser, postsController.getBlabsByMe);
+/**
+ * @swagger
+ * /posts/getBlabsByMe:
+ *   get:
+ *      description: Get blabs written by user
+ *      tags:
+ *          - blabs
+ *      responses:
+ *          '200':
+ *              description: Resource added successfully
+ *          '500':
+ *              description: Internal server error
+ *          '400':
+ *              description: Bad request
+ */
 
 router.post("/addBlab", checkUser, postsController.addBlab);
 /**
@@ -44,7 +74,7 @@ router.get("/getAllBlabs", checkUser, postsController.getAllBlabs);
  * @swagger
  * /posts/getAllBlabs:
  *   get:
- *      description: Get all blbs
+ *      description: Get all blabs
  *      tags:
  *          - blabs
  *      responses:

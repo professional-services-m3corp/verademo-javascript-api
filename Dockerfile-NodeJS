@@ -6,5 +6,6 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 EXPOSE 8000
-CMD ["npm", "run","devStart"]
+#CMD ["npm", "run","devStart"] <-- Use for development
 
+CMD ["node", "index.js"]
