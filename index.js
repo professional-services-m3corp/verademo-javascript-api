@@ -1,6 +1,7 @@
 const express = require("express");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const fs = require("fs");
 
 const app = express();
 const bodyParser = require("body-parser");
@@ -28,6 +29,7 @@ const swaggerOption = {
 };
 
 const swaggerDocs = swaggerJsdoc(swaggerOption);
+
 app.use("/public", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 /** Swagger Initialization - END */
 
