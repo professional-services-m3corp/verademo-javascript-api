@@ -58,7 +58,10 @@ jobs:
 
       - name: scan
         run: |
-          java -jar /opt/veracode/api-wrapper.jar -vid ${{ secrets.VERACODE_API_ID }} -vkey ${{ secrets.VERACODE_API_KEY }} -action UploadAndScan -appname "Verademo-Javascript-API" -createprofile false -filepath verademo-javascript-api.zip -version "GitHub $GITHUB_RUN_NUMBER"
+          java -jar /opt/veracode/api-wrapper.jar \
+            -vid ${{ secrets.VERACODE_API_ID }} -vkey ${{ secrets.VERACODE_API_KEY }} \
+            -action UploadAndScan -appname "Verademo-Javascript-API" -createprofile true \
+            -filepath verademo-javascript-api.zip -version "GitHub $GITHUB_RUN_NUMBER"
         continue-on-error: true
 
 # the above steps are the bare minimum.
