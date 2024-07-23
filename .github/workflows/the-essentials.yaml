@@ -27,7 +27,7 @@ jobs:
           node-version: '20.14.0'
     
       - name: Zip Application Files 
-        run: apt-get install zip ; zip -r verademo-javascript-api.zip .
+        run: sudo apt-get install zip ; zip -r verademo-javascript-api.zip .
 
       - name: save artifact
         uses: actions/upload-artifact@v4
