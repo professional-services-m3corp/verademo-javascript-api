@@ -105,8 +105,8 @@ jobs:
       - name: do container scan
         uses: veracode/container_iac_secrets_scanning@v1.0.0
         with:
-          vid: ${{ VERACODE_PLATFORM_ID }}
-          vkey: ${{ VERACODE_PLATFORM_SECRETKEY }}
+          vid: ${{ secrets.VERACODE_API_ID }}
+          vkey: ${{ secrets.VERACODE_API_KEY }}
           command: "scan" 
           type: "directory"
           source: "./"
