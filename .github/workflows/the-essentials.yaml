@@ -79,6 +79,11 @@ jobs:
         with:
           node-version: '20.14.0'
 
+      - name: debug1
+        run: |
+          pwd
+          ls -l
+
       - name: do SCA scan
         env:
           SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
