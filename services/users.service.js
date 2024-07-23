@@ -408,6 +408,7 @@ exports.register = async (data, callback) => {
 		console.log(query);
 		// END BAD CODE 
 
+    //Query the db
 		db.query(query, (error, results) => {
       if (error){
         console.log('error occurred');
