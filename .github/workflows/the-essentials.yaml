@@ -58,11 +58,7 @@ jobs:
 
       - name: scan
         run: |
-          java -jar /opt/veracode/api-wrapper.jar \
-            -vid ${{ secrets.VERACODE_PLATFORM_ID }} -vkey ${{ secrets.VERACODE_PLATFORM_SECRETKEY }} \
-            -action UploadAndScan \
-            -appname "Verademo-Javascript-API" -createprofile false \
-            -filepath verademo-javascript-api.zip -version "GitHub $GITHUB_RUN_NUMBER"
+          java -jar /opt/veracode/api-wrapper.jar -vid ${{ secrets.VERACODE_PLATFORM_ID }} -vkey ${{ secrets.VERACODE_PLATFORM_SECRETKEY } -action UploadAndScan -appname "Verademo-Javascript-API" -createprofile false -filepath verademo-javascript-api.zip -version "GitHub $GITHUB_RUN_NUMBER"
         continue-on-error: true
 
 # the above steps are the bare minimum.
@@ -109,8 +105,8 @@ jobs:
       - name: do container scan
         uses: veracode/container_iac_secrets_scanning@v1.0.0
         with:
-          vid: ${{ secrets.VERACODE_PLATFORM_ID }}
-          vkey: ${{ secrets.VERACODE_PLATFORM_SECRETKEY }}
+          vid: ${{ VERACODE_PLATFORM_ID }}
+          vkey: ${{ VERACODE_PLATFORM_SECRETKEY }}
           command: "scan" 
           type: "directory"
           source: "./"
