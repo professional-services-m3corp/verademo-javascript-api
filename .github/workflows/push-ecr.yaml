@@ -28,5 +28,5 @@ jobs:
           REPOSITORY: vuln_images
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker compose build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          docker compose build
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG

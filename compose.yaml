@@ -11,6 +11,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    container_name: api
     develop:
       watch:
         - path: package.json
