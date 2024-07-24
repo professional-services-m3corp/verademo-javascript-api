@@ -4,6 +4,7 @@
 services:
 
   api:
+    image: verademo-js
     build:
       context: ./
       dockerfile: ./Dockerfile-NodeJS

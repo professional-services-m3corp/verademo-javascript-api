@@ -29,4 +29,5 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker compose build
+          docker tag verademo-js $REGISTRY/$REPOSITORY:$IMAGE_TAG
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
