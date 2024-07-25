@@ -1,0 +1,592 @@
+{
+	"info": {
+		"_postman_id": "fc5386bb-1d93-4378-a2c5-284fc4f166e3",
+		"name": "MySQL Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36377735"
+	},
+	"item": [
+		{
+			"name": "blabs",
+			"item": [
+				{
+					"name": "getBlabsForMe",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/posts/getBlabsForMe",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts",
+								"getBlabsForMe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getBlabsByMe",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/posts/getBlabsByMe",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts",
+								"getBlabsByMe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addBlab",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"blab\": \"This is a test blab from Postman.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/posts/addBlab",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts",
+								"addBlab"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllBlabs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/posts/getAllBlabs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts",
+								"getAllBlabs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addBlabComment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"blabId\": 72,\n    \"comment\": \"Test comment from Postman\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/posts/addBlabComment",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts",
+								"addBlabComment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getBlabComments",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"blabId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/posts/getBlabComments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts",
+								"getBlabComments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteBlab",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"blabId\": 72\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/posts/deleteBlab",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts",
+								"deleteBlab"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "getBlabbers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/getBlabbers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"getBlabbers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ignore",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"blabberUsername\": \"johnny\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/ignore",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"ignore"
+							],
+							"query": [
+								{
+									"key": "blabberUsername",
+									"value": "johnny",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listen",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"blabberUsername\": \"johnny\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/listen",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"listen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProfileInfo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/getProfileInfo",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"getProfileInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getEvents",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/getEvents",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"getEvents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateProfile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"brian\",\n    \"blabName\": \"Stydvin\",\n    \"realName\": \"StuKevClyde\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/updateProfile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"updateProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"carst\",\n    \"password\": \"brian\",\n    \"cpassword\": \"brian\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/reset",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUsers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/getUsers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"getUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUser",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/getUser",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"getUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"brian\",\n    \"password\": \"brian\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"login"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000"
+		},
+		{
+			"key": "token",
+			"value": "Token: brian_CBD44F8B5B48A51F7DAB98ABCDF45D4E",
+			"type": "string"
+		}
+	]
+}
