@@ -19,7 +19,7 @@ There are two ways to run this API: using **docker compose**, or **running local
 
 ### Docker (Recommended)
 - Docker is a prerequisite. If not downloaded, [download here](https://www.docker.com/products/docker-desktop/).
-1. 
+1. ``docker compose up -d``
 
 ### Local
 - Node.js is a prerequisite. [Download here](https://nodejs.org/en/download/package-manager).
@@ -69,8 +69,8 @@ It's using token based authentication. You are required to send an authenticatio
 <img src="https://github.com/veracode/verademo-javascript-api/blob/main/pictures/authentication.png" width="800" />  
 The token is the user's username appended to the md5 hashedpassword of the user's password with an underscore. If your are using the default database this is already stored on the `blab` database and the `users` table.
 
-The API provides a few calls that also can reviewed on the automatically generated swagger overview under `http://IP:8000/public/`. It also brings a full swagger file in `/public/swagger.json` that can be used for dynamic API scanning, as well as a Postman Collection file in `/public/api_postman_collection.json`.
-!<img src="https://github.com/veracode/verademo-javascript-api/blob/main/pictures/swagger_overview.png" width="800" />  
+The API provides a few calls that also can reviewed on the automatically generated swagger overview under `http://IP:8000/public/`. It also brings a full swagger file in `/public/swagger.json` that can be used for dynamic API scanning, as well as a Postman Collection file in `/public/api_postman_collection.json`!
+<img src="https://github.com/veracode/verademo-javascript-api/blob/main/pictures/swagger_overview.png" width="800" />  
 If you run a call against this API it requires JSON data to be sent (where applicalble) and it will also return JSON data.  
 <img src="https://github.com/veracode/verademo-javascript-api/blob/main/pictures/insomnia_request.png" width="800" />
   
