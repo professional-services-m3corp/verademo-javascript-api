@@ -7,7 +7,7 @@ services:
     image: verademoAPI
     build:
       context: ./
-      dockerfile: ./Dockerfile-NodeJS
+      dockerfile: ./Dockerfile
       platforms:
         - linux/amd64
         - linux/arm64

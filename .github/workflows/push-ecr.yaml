@@ -26,7 +26,7 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: vuln_images
-          IMAGE_TAG: ${{ github.sha }}
+          IMAGE_TAG: ${{ github.run_number }}
         run: |
           docker build -t verademo_api:$IMAGE_TAG .
           docker tag verademo_api:$IMAGE_TAG $REGISTRY/$REPOSITORY/verademo_api-latest
