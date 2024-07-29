@@ -191,7 +191,7 @@ router.post("/register", usersController.register);
   *              description: Bad request
   */
 
-router.get("/reset", checkUser, resetController.reset);
+router.get("/reset", resetController.reset);
 /**
  * @swagger
  * /users/reset:
