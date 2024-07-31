@@ -38,7 +38,7 @@ app.use("/posts", postsRoutes);
 app.use("/admin", adminRoutes);
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('VerademoAPI is operational!')
 })
 
 app.listen(8000, () => {

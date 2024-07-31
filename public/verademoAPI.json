@@ -7,6 +7,334 @@
 	},
 	"item": [
 		{
+			"name": "users",
+			"item": [
+				{
+					"name": "reset",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/reset",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getBlabbers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/getBlabbers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"getBlabbers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ignore",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"blabberUsername\": \"johnny\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/ignore",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"ignore"
+							],
+							"query": [
+								{
+									"key": "blabberUsername",
+									"value": "johnny",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listen",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"blabberUsername\": \"johnny\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/listen",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"listen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProfileInfo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/getProfileInfo",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"getProfileInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getEvents",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/getEvents",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"getEvents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateProfile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"brian\",\n    \"blabName\": \"Stydvin\",\n    \"realName\": \"StuKevClyde\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/updateProfile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"updateProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"carst\",\n    \"password\": \"brian\",\n    \"cpassword\": \"brian\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUsers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/getUsers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"getUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUser",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/getUser",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"getUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"brian\",\n    \"password\": \"brian\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"login"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "blabs",
 			"item": [
 				{
@@ -214,346 +542,6 @@
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "users",
-			"item": [
-				{
-					"name": "getBlabbers",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/users/getBlabbers",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users",
-								"getBlabbers"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "ignore",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"blabberUsername\": \"johnny\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/users/ignore",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users",
-								"ignore"
-							],
-							"query": [
-								{
-									"key": "blabberUsername",
-									"value": "johnny",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "listen",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"blabberUsername\": \"johnny\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/users/listen",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users",
-								"listen"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getProfileInfo",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/users/getProfileInfo",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users",
-								"getProfileInfo"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getEvents",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/users/getEvents",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users",
-								"getEvents"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "updateProfile",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"username\": \"brian\",\n    \"blabName\": \"Stydvin\",\n    \"realName\": \"StuKevClyde\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/users/updateProfile",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users",
-								"updateProfile"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "register",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"username\": \"carst\",\n    \"password\": \"brian\",\n    \"cpassword\": \"brian\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/users/register",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users",
-								"register"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "reset",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/users/reset",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users",
-								"reset"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getUsers",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/users/getUsers",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users",
-								"getUsers"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getUser",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/users/getUser",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users",
-								"getUser"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "login",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"username\": \"brian\",\n    \"password\": \"brian\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/users/login",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users",
-								"login"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": null,
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
 		}
 	],
 	"event": [
@@ -581,7 +569,7 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "http://localhost:8000"
+			"value": "http://verademoapi.ssessions.vuln.sa.veracode.io:8000"
 		},
 		{
 			"key": "token",
