@@ -265,7 +265,7 @@ router.post("/login", checkUser, usersController.userLogin);
  *              type: object
  *              required:
  *                 - username
- *                 - pasword
+ *                 - password
  *              properties:
  *                  username:
  *                      type: string

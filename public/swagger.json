@@ -22,11 +22,9 @@
               "in": "body",
               "name": "Command",
               "description": "Command",
+              "required": true,
               "schema": {
                 "type": "object",
-                "required": [
-                  "command"
-                ],
                 "properties": {
                   "command": {
                     "type": "string",
@@ -60,11 +58,9 @@
               "in": "body",
               "name": "Get file",
               "description": "flename",
+              "required":true,
               "schema": {
                 "type": "object",
-                "required": [
-                  "filename"
-                ],
                 "properties": {
                   "filename": {
                     "type": "string",
@@ -136,33 +132,38 @@
               "in": "body",
               "name": "Post Blab",
               "description": "Post Blab",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "blab"
-                ],
-                "properties": {
-                  "blab": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 1000,
-                    "example": "This is sample Blab"
-                  }
+              "parameters": [
+                {
+                    "in": "body",
+                    "name": "blab",
+                    "description": "Post Blab",
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        
+                        "properties": {
+                            "blab": {
+                                "type": "string",
+                                "description": "blab to add",
+                                "example": "This is sample Blab"
+                            }
+                        }
+                     }
                 }
-              }
+                ]
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "Resource added successfully"
-            },
-            "400": {
-              "description": "Bad request"
-            },
-            "500": {
-              "description": "Internal server error"
+            ],
+            "responses": {
+                "200": {
+                "description": "Resource added successfully"
+                },
+                "400": {
+                "description": "Bad request"
+                },
+                "500": {
+                "description": "Internal server error"
+                }
             }
-          }
         }
       },
       "/posts/getAllBlabs": {
@@ -193,29 +194,31 @@
           "parameters": [
             {
               "in": "body",
-              "name": "Comment",
-              "description": "Blab Comment",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "blabId",
-                  "comment"
-                ],
-                "properties": {
-                  "blabId": {
-                    "type": "integer",
-                    "example": 145
-                  },
-                  "comment": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 1000,
-                    "example": "This is sample comment"
-                  }
+              "name": "Post comment",
+              "description": "Post a blab comment",
+              "parameters": [
+                {
+                    "in": "body",
+                    "name": "comment",
+                    "description": "Post blab comment",
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                        "blabId": {
+                            "type": "integer",
+                            "example": 145
+                        },
+                        "comment": {
+                            "type": "string",
+                            "example": "This is sample comment"
+                        }
+                        }
+                    }
                 }
-              }
+                ]
             }
-          ],
+            ],
           "responses": {
             "200": {
               "description": "Resource added successfully"
@@ -240,11 +243,9 @@
               "in": "body",
               "name": "blabid",
               "description": "Blab ID",
+              "required": true,
               "schema": {
                 "type": "object",
-                "required": [
-                  "blabid"
-                ],
                 "properties": {
                   "blabid": {
                     "type": "integer",
@@ -597,7 +598,7 @@
                 "type": "object",
                 "required": [
                   "username",
-                  "pasword"
+                  "password"
                 ],
                 "properties": {
                   "username": {

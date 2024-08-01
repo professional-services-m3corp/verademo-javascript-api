@@ -30,6 +30,15 @@ const swaggerOption = {
 
 const swaggerDocs = swaggerJsdoc(swaggerOption);
 
+/** Write to JSON */
+// fs.writeFile('swagger.json', JSON.stringify(swaggerDocs), 'utf8', (err) => {
+//   if (err)
+//     console.log(err);
+//   else {
+//     console.log("File written successfully\n");
+//   }});
+
+
 app.use("/public", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 /** Swagger Initialization - END */
 

@@ -488,7 +488,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"blabId\": 2\n}",
+							"raw": "{\n    \"blabId\": \"1 \\\" or blabid = \\\"4\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
