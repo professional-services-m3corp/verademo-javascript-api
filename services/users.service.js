@@ -63,6 +63,9 @@ exports.ignore = (blabberUsername, username, callback) => {
             });
             
           /* END EXAMPLE VULNERABILITY */
+        } else {
+          console.log('No matching results found');
+          return callback(null, 'query success - no results');
         }
       });
     });
