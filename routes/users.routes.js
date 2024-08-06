@@ -6,201 +6,283 @@ var express = require("express");
 
 var router = express.Router();
 
-router.get("/getBlabbers", checkUser, usersController.getBlabbers);
 /**
  * @swagger
- * /users/getBlabbers:
+ * /getBlabbers:
  *   get:
- *      description: get Blabbers
- *      tags:
- *          - users
- *      parameters:
- *          none
- *      responses:
- *          '200':
- *              description: Resource accessed successfully
- *          '500':
- *              description: Internal server error
- *          '400':
- *              description: Bad request
- */
+ *     description: get Blabbers
+ *     tags:
+ *       - users
+ *     responses:
+ *       '200':
+ *         description: Resource accessed successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       username:
+ *                         type: string
+ *                         description: The blabber username.
+ *                         example: april
+ *                       blab_name:
+ *                         type: string
+ *                         description: The blabber blab name.
+ *                         example: April
+ *                       created_at:
+ *                         type: string
+ *                         description: the datetime blabber was created.
+ *                         example: 2024-08-05T19:58:03.000Z
+ *                       listeners:
+ *                         type: integer
+ *                         description: Whether user is listening to this blabber
+ *                         example: 0
+ *                       listening:
+ *                         type: integer
+ *                         description: The bumber of accounts listening to this blabber
+ *                         example: 17
+ *       '500':
+ *          description: Internal server error
+ *       '400':
+ *          description: Bad request
+*/
+router.get("/getBlabbers", checkUser, usersController.getBlabbers);
 
+/**
+ * @swagger
+ * /ignore:
+ *   post:
+ *     summary: ignore a user
+ *     tags:
+ *      - users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *            type: object
+ *            properties:
+ *              blabberUsername:
+ *                type: string
+ *                description: The blabber to ignore
+ *                example: johnny
+ *     responses:
+ *        '200':
+ *            description: Database changed successfully
+ *        '500':
+ *            description: Internal server error
+ *        '400':
+ *            description: Bad request
+ */
 router.post("/ignore", checkUser, usersController.ignore);
-/**
- * @swagger
- * /users/ignore:
- *   post:
- *      description: ignore a user
- *      tags:
- *          - users
- *      parameters:
- *          - in: body
- *            name: Ignore Blabber
- *            description: Ignore Blabber
- *            schema:
- *              type: object
- *              required:
- *                 - blabberUsername
- *              properties:
- *                  blabberUsername:
- *                      type: string
- *                      example: blabName
- *      responses:
- *          '200':
- *              description: Database changed successfully
- *          '500':
- *              description: Internal server error
- *          '400':
- *              description: Bad request
- */
 
-router.post("/listen", checkUser, usersController.listen);
 /**
  * @swagger
- * /users/listen:
+ * /listen:
  *   post:
- *      description: listen to a user
- *      tags:
- *          - users
- *      parameters:
- *          - in: body
- *            name: Listen to Blabber
- *            description: Listen to Blabber
- *            schema:
- *              type: object
- *              required:
- *                 - blabberUsername
- *              properties:
- *                  blabberUsername:
- *                      type: string
- *                      example: blabName
- *      responses:
- *          '200':
- *              description: Database changed successfully
- *          '500':
+ *     summary: listen to a user
+ *     tags:
+ *      - users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              blabberUsername:
+ *                type: string
+ *                description: The blabber to listen to.
+ *                example: johnny
+ *     responses:
+ *        '200':
+ *            description: Database changed successfully
+ *        '500':
+ *            description: Internal server error
+ *        '400':
+ *            description: Bad request
+ */
+router.post("/listen", checkUser, usersController.listen);
+
+/**
+ * @swagger
+ * /getProfileInfo:
+ *   get:
+ *       description: Get a User's information
+ *       tags:
+ *        - users
+ *       responses:
+ *           '200':
+ *               description: Information Retrieved
+ *               content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      data:
+ *                        type: object
+ *                        properties:
+ *                          hecklers:
+ *                            type: array
+ *                            items:
+ *                              type: object
+ *                              properties:
+ *                                username:
+ *                                  type: string
+ *                                  description: The heckler username.
+ *                                  example: april
+ *                                blab_name:
+ *                                  type: string
+ *                                  description: The heckler blab name.
+ *                                  example: April
+ *                                created_at:
+ *                                  type: string
+ *                                  description: the datetime heckler was created.
+ *                                  example: 2024-08-05T19:58:03.000Z
+ *                          events:
+ *                            type: array
+ *                            items:
+ *                              type: string
+ *                              description: the event that occurred
+ *                              example: Brian stopped listening to Johnny
+ *                          username:
+ *                            type: string
+ *                            description: The username
+ *                            example: april
+ *                          realName:
+ *                            type: string
+ *                            description: The real name
+ *                            example: Brian Pitta
+ *                          blabName:
+ *                            type: string
+ *                            description: The blab name
+ *                            example: Brian
+ *                          totpSecret:
+ *                            type: string
+ *                            description: The totpSecret code
+ *                            example: FZQWCJRVHZWFKMLGPFIS6ZCRIZBEGWZ6
+ *           '500':
  *              description: Internal server error
- *          '400':
+ *           '400':
  *              description: Bad request
  */
 
 router.get("/getProfileInfo", checkUser, usersController.getProfileInfo);
-/**
- * @swagger
- * /users/getProfileInfo:
- *   get:
- *      description: Get a User's information
- *      tags:
- *          - users
- *      parameters:
- *          None
- *      responses:
- *          '200':
- *              description: Information Retrieved
- *          '500':
- *              description: Internal server error
- *          '400':
- *              description: Bad request
- */
 
-router.get("/getEvents", checkUser, usersController.getEvents);
+
+ 
 /**
- * @swagger
- * /users/getEvents:
- *   get:
+ *  @swagger
+ *  /getEvents:
+ *    get:
  *      description: Get a User's event history
  *      tags:
- *          - users
- *      parameters:
- *          None
+ *        - users
  *      responses:
  *          '200':
- *              description: Information Retrieved
+ *              description: Events Retrieved
+ *              content:
+ *              application/json:
+ *                schema:
+ *                  type: object
+ *                  properties:
+ *                    data:
+ *                      type: array
+ *                      items:
+ *                        type: string
+ *                        description: the event that occurred
+ *                        example: Brian stopped listening to Johnny
  *          '500':
  *              description: Internal server error
  *          '400':
  *              description: Bad request
  */
+router.get("/getEvents", checkUser, usersController.getEvents);
 
-router.post("/updateProfile", checkUser, usersController.updateProfile);
 /**
  * @swagger
- * /users/updateProfile:
+ * /updateProfile:
  *   post:
- *      description: Update a user's profile info
- *      tags:
- *          - users
- *      parameters:
-  *          - in: body
- *            name: Update Profile
- *            description: Update Profile
- *            schema:
- *              type: object
- *              required:
- *                 - username
- *                 - blabName
- *                 - realName
- *              properties:
- *                  username:
- *                      type: string
- *                      example: myUsername
- *                  blabName:
- *                      type: string
- *                      example: myBlabName
- *                  realName:
- *                      type: string
- *                      example: myRealName
- *      responses:
- *          '200':
- *              description: Database changed successfully
- *          '500':
- *              description: Internal server error
- *          '400':
- *              description: Bad request
- */
-
-router.post("/register", usersController.register);
-/**
-  * @swagger
-  * /users/register:
-  *   post:
-  *      description: Register user
-  *      tags:
-  *          - users
-  *      parameters:
-  *          - in: body
- *            name: User Register
- *            description: User Register
- *            schema:
- *              type: object
- *              required:
- *                 - username
- *                 - pasword
- *              properties:
- *                  username:
- *                      type: string
- *                      example: myUsername
- *                  password:
- *                      type: string
- *                      example: myPassword
-  *      responses:
-  *          '200':
-  *              description: Resource added successfully
-  *          '500':
-  *              description: Internal server error
-  *          '400':
-  *              description: Bad request
-  */
-
-router.get("/reset", resetController.reset);
+ *     summary: update the user's profile
+ *     tags:
+ *       - users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: The new username
+ *                 example: brian
+ *               blabName:
+ *                 type: string
+ *                 description: The new blab name
+ *                 example: Stydvin
+ *               realName:
+ *                 type: string
+ *                 description: The new real name
+ *                 example: StuKevClyde
+ *     responses:
+ *       '200':
+ *           description: Database changed successfully
+ *       '500':
+ *           description: Internal server error
+ *       '400':
+ *           description: Bad request
+*/
+router.post("/updateProfile", checkUser, usersController.updateProfile);
+ 
 /**
  * @swagger
- * /users/reset:
- *   get:
+ * /register:
+ *   post:
+ *     summary: register a user
+ *     tags:
+ *       - users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: The new username
+ *                 example: carst
+ *               password:
+ *                 type: string
+ *                 description: new password
+ *                 example: carst
+ *               cpassword:
+ *                 type: string
+ *                 description: confirmed password
+ *                 example: carst
+ *     responses:
+ *       '200':
+ *           description: Database changed successfully
+ *       '500':
+ *           description: Internal server error
+ *       '400':
+ *           description: Bad request
+*/
+router.post("/register", usersController.register);
+
+/**
+ * @swagger
+ * /reset:
+ *  get:
  *      description: reset database
  *      tags:
  *          - users
- *      parameters:
- *          none
  *      responses:
  *          '200':
  *              description: Resource accessed successfully
@@ -209,77 +291,103 @@ router.get("/reset", resetController.reset);
  *          '400':
  *              description: Bad request
  */
+router.get("/reset", resetController.reset);
 
+ 
+/**
+ * @swagger
+ * /getUsers:
+ *   get:
+ *     description: Get all users
+ *     tags:
+ *         - users
+ *     responses:
+ *       '200':
+ *         description: Resource accessed successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       username:
+ *                         type: string
+ *                         description: The username.
+ *                         example: april
+ *                       real_name:
+ *                         type: string
+ *                         description: user real name
+ *                         example: April Sauer
+ *                       blab_name:
+ *                         type: string
+ *                         description: The user blab name.
+ *                         example: April
+ *                       created_at:
+ *                         type: string
+ *                         description: the datetime user was created.
+ *                         example: 2024-08-05T19:58:03.000Z
+ * 
+ *       '500':
+ *           description: Internal server error
+ *       '400':
+ *           description: Bad request
+*/
 router.get("/getUsers", checkUser, usersController.getUsers);
-/**
- * @swagger
- * /users/getUsers:
- *   get:
- *      description: Get all users
- *      tags:
- *          - users
- *      parameters:
- *          none
- *      responses:
- *          '200':
- *              description: Resource accessed successfully
- *          '500':
- *              description: Internal server error
- *          '400':
- *              description: Bad request
- */
 
 
-router.get("/getUser", checkUser, usersController.getUser);
 /**
- * @swagger
- * /users/getUser:
- *   get:
+ *  @swagger
+ *  /getUser:
+ *    get:
  *      description: Get get specified user
  *      tags:
  *          - users
- *      parameters:
- *          none
  *      responses:
- *          '200':
- *              description: Resource accessed successfully
- *          '500':
- *              description: Internal server error
- *          '400':
- *              description: Bad request
- */
+ *        '200':
+ *            description: Resource accessed successfully
+ *        '500':
+ *            description: Internal server error
+ *        '400':
+ *            description: Bad request
+*/ 
+router.get("/getUser", checkUser, usersController.getUser);
 
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: login a user
+ *     tags:
+ *       - users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: The new username
+ *                 example: brian
+ *               password:
+ *                 type: string
+ *                 description: new password
+ *                 example: brian
+ *               
+ *     responses:
+ *       '200':
+ *           description: Database changed successfully
+ *       '500':
+ *           description: Internal server error
+ *       '400':
+ *           description: Bad request
+*/
 router.post("/login", checkUser, usersController.userLogin);
- /**
-  * @swagger
-  * /users/login:
-  *   post:
-  *      description: Get all users
-  *      tags:
-  *          - users
-  *      parameters:
-  *          - in: body
- *            name: User Login
- *            description: User Login
- *            schema:
- *              type: object
- *              required:
- *                 - username
- *                 - password
- *              properties:
- *                  username:
- *                      type: string
- *                      example: myUsername
- *                  password:
- *                      type: string
- *                      example: myPassword
-  *      responses:
-  *          '200':
-  *              description: Resource added successfully
-  *          '500':
-  *              description: Internal server error
-  *          '400':
-  *              description: Bad request
-  */
 
- module.exports = router;
+
+module.exports = router;

@@ -22,9 +22,11 @@
               "in": "body",
               "name": "Command",
               "description": "Command",
-              "required": true,
               "schema": {
                 "type": "object",
+                "required": [
+                  "command"
+                ],
                 "properties": {
                   "command": {
                     "type": "string",
@@ -58,9 +60,11 @@
               "in": "body",
               "name": "Get file",
               "description": "flename",
-              "required":true,
               "schema": {
                 "type": "object",
+                "required": [
+                  "filename"
+                ],
                 "properties": {
                   "filename": {
                     "type": "string",
@@ -83,7 +87,7 @@
           }
         }
       },
-      "/posts/getBlabsForMe": {
+      "/getBlabsForMe": {
         "get": {
           "description": "Get blabs written for user",
           "tags": [
@@ -102,7 +106,7 @@
           }
         }
       },
-      "/posts/getBlabsByMe": {
+      "/getBlabsByMe": {
         "get": {
           "description": "Get blabs written by user",
           "tags": [
@@ -121,52 +125,43 @@
           }
         }
       },
-      "/posts/addBlab": {
+      "/addBlab": {
         "post": {
-          "description": "Used to add post",
+          "summary": "add a blab to db",
           "tags": [
             "blabs"
           ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "Post Blab",
-              "description": "Post Blab",
-              "parameters": [
-                {
-                    "in": "body",
-                    "name": "blab",
-                    "description": "Post Blab",
-                    "required": true,
-                    "schema": {
-                        "type": "object",
-                        
-                        "properties": {
-                            "blab": {
-                                "type": "string",
-                                "description": "blab to add",
-                                "example": "This is sample Blab"
-                            }
-                        }
-                     }
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "blab": {
+                      "type": "string",
+                      "description": "The blab to write",
+                      "example": "This is a test blab"
+                    }
+                  }
                 }
-                ]
+              }
             }
-            ],
-            "responses": {
-                "200": {
-                "description": "Resource added successfully"
-                },
-                "400": {
-                "description": "Bad request"
-                },
-                "500": {
-                "description": "Internal server error"
-                }
+          },
+          "responses": {
+            "200": {
+              "description": "Database changed successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
             }
+          }
         }
       },
-      "/posts/getAllBlabs": {
+      "/getAllBlabs": {
         "get": {
           "description": "Get all blabs",
           "tags": [
@@ -174,54 +169,39 @@
           ],
           "responses": {
             "200": {
-              "description": "Resource added successfully"
-            },
-            "400": {
-              "description": "Bad request"
-            },
-            "500": {
-              "description": "Internal server error"
-            }
-          }
-        }
-      },
-      "/posts/addBlabComment": {
-        "post": {
-          "description": "Used to add Blab comment",
-          "tags": [
-            "blabs"
-          ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "Post comment",
-              "description": "Post a blab comment",
-              "parameters": [
-                {
-                    "in": "body",
-                    "name": "comment",
-                    "description": "Post blab comment",
-                    "required": true,
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                        "blabId": {
-                            "type": "integer",
-                            "example": 145
-                        },
-                        "comment": {
-                            "type": "string",
-                            "example": "This is sample comment"
+              "description": "Resource received successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "blabid": {
+                              "type": "integer",
+                              "description": "blabid",
+                              "example": 1
+                            },
+                            "blabber": {
+                              "type": "string",
+                              "description": "user blab name",
+                              "example": "paul"
+                            },
+                            "content": {
+                              "type": "string",
+                              "description": "Blab content.",
+                              "example": "Example blab content"
+                            }
+                          }
                         }
-                        }
+                      }
                     }
+                  }
                 }
-                ]
-            }
-            ],
-          "responses": {
-            "200": {
-              "description": "Resource added successfully"
+              }
             },
             "400": {
               "description": "Bad request"
@@ -232,29 +212,34 @@
           }
         }
       },
-      "/posts/getBlabComments": {
+      "/addBlabComment": {
         "post": {
-          "description": "Used to get all comments of given blab id",
+          "summary": "add a comment to blab",
           "tags": [
             "blabs"
           ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "blabid",
-              "description": "Blab ID",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "blabid": {
-                    "type": "integer",
-                    "example": 1
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "blabId": {
+                      "type": "integer",
+                      "description": "The the blabId to comment on",
+                      "example": 72
+                    },
+                    "comment": {
+                      "type": "string",
+                      "description": "The comment text",
+                      "example": "Test comment"
+                    }
                   }
                 }
               }
             }
-          ],
+          },
           "responses": {
             "200": {
               "description": "Resource added successfully"
@@ -268,7 +253,75 @@
           }
         }
       },
-      "/posts/deleteBlab": {
+      "/getBlabComments": {
+        "post": {
+          "description": "Get all blabs",
+          "tags": [
+            "blabs"
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "blabId": {
+                      "type": "integer",
+                      "description": "The blab to get comments for",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Resource received successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "blabid": {
+                              "type": "integer",
+                              "description": "blabid",
+                              "example": 1
+                            },
+                            "blabber": {
+                              "type": "string",
+                              "description": "user blab name",
+                              "example": "paul"
+                            },
+                            "content": {
+                              "type": "string",
+                              "description": "Blab content.",
+                              "example": "Example blab content"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/deleteBlab": {
         "delete": {
           "description": "Used to delete Blab",
           "tags": [
@@ -296,16 +349,57 @@
           }
         }
       },
-      "/users/getBlabbers": {
+      "/getBlabbers": {
         "get": {
           "description": "get Blabbers",
           "tags": [
             "users"
           ],
-          "parameters": "none",
           "responses": {
             "200": {
-              "description": "Resource accessed successfully"
+              "description": "Resource accessed successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "username": {
+                              "type": "string",
+                              "description": "The blabber username.",
+                              "example": "april"
+                            },
+                            "blab_name": {
+                              "type": "string",
+                              "description": "The blabber blab name.",
+                              "example": "April"
+                            },
+                            "created_at": {
+                              "type": "string",
+                              "description": "the datetime blabber was created.",
+                              "example": "2024-08-05T19:58:03.000Z"
+                            },
+                            "listeners": {
+                              "type": "integer",
+                              "description": "Whether user is listening to this blabber",
+                              "example": 0
+                            },
+                            "listening": {
+                              "type": "integer",
+                              "description": "The bumber of accounts listening to this blabber",
+                              "example": 17
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             },
             "400": {
               "description": "Bad request"
@@ -316,31 +410,29 @@
           }
         }
       },
-      "/users/ignore": {
+      "/ignore": {
         "post": {
-          "description": "ignore a user",
+          "summary": "ignore a user",
           "tags": [
             "users"
           ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "Ignore Blabber",
-              "description": "Ignore Blabber",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "blabberUsername"
-                ],
-                "properties": {
-                  "blabberUsername": {
-                    "type": "string",
-                    "example": "blabName"
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "blabberUsername": {
+                      "type": "string",
+                      "description": "The blabber to ignore",
+                      "example": "johnny"
+                    }
                   }
                 }
               }
             }
-          ],
+          },
           "responses": {
             "200": {
               "description": "Database changed successfully"
@@ -354,31 +446,29 @@
           }
         }
       },
-      "/users/listen": {
+      "/listen": {
         "post": {
-          "description": "listen to a user",
+          "summary": "listen to a user",
           "tags": [
             "users"
           ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "Listen to Blabber",
-              "description": "Listen to Blabber",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "blabberUsername"
-                ],
-                "properties": {
-                  "blabberUsername": {
-                    "type": "string",
-                    "example": "blabName"
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "blabberUsername": {
+                      "type": "string",
+                      "description": "The blabber to listen to.",
+                      "example": "johnny"
+                    }
                   }
                 }
               }
             }
-          ],
+          },
           "responses": {
             "200": {
               "description": "Database changed successfully"
@@ -392,16 +482,80 @@
           }
         }
       },
-      "/users/getProfileInfo": {
+      "/getProfileInfo": {
         "get": {
           "description": "Get a User's information",
           "tags": [
             "users"
           ],
-          "parameters": "None",
           "responses": {
             "200": {
-              "description": "Information Retrieved"
+              "description": "Information Retrieved",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "hecklers": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "username": {
+                                  "type": "string",
+                                  "description": "The heckler username.",
+                                  "example": "april"
+                                },
+                                "blab_name": {
+                                  "type": "string",
+                                  "description": "The heckler blab name.",
+                                  "example": "April"
+                                },
+                                "created_at": {
+                                  "type": "string",
+                                  "description": "the datetime heckler was created.",
+                                  "example": "2024-08-05T19:58:03.000Z"
+                                }
+                              }
+                            }
+                          },
+                          "events": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "description": "the event that occurred",
+                              "example": "Brian stopped listening to Johnny"
+                            }
+                          },
+                          "username": {
+                            "type": "string",
+                            "description": "The username",
+                            "example": "april"
+                          },
+                          "realName": {
+                            "type": "string",
+                            "description": "The real name",
+                            "example": "Brian Pitta"
+                          },
+                          "blabName": {
+                            "type": "string",
+                            "description": "The blab name",
+                            "example": "Brian"
+                          },
+                          "totpSecret": {
+                            "type": "string",
+                            "description": "The totpSecret code",
+                            "example": "FZQWCJRVHZWFKMLGPFIS6ZCRIZBEGWZ6"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             },
             "400": {
               "description": "Bad request"
@@ -412,16 +566,31 @@
           }
         }
       },
-      "/users/getEvents": {
+      "/getEvents": {
         "get": {
           "description": "Get a User's event history",
           "tags": [
             "users"
           ],
-          "parameters": "None",
           "responses": {
             "200": {
-              "description": "Information Retrieved"
+              "description": "Events Retrieved",
+              "content": null,
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "the event that occurred",
+                        "example": "Brian stopped listening to Johnny"
+                      }
+                    }
+                  }
+                }
+              }
             },
             "400": {
               "description": "Bad request"
@@ -432,41 +601,39 @@
           }
         }
       },
-      "/users/updateProfile": {
+      "/updateProfile": {
         "post": {
-          "description": "Update a user's profile info",
+          "summary": "update the user's profile",
           "tags": [
             "users"
           ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "Update Profile",
-              "description": "Update Profile",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "username",
-                  "blabName",
-                  "realName"
-                ],
-                "properties": {
-                  "username": {
-                    "type": "string",
-                    "example": "myUsername"
-                  },
-                  "blabName": {
-                    "type": "string",
-                    "example": "myBlabName"
-                  },
-                  "realName": {
-                    "type": "string",
-                    "example": "myRealName"
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string",
+                      "description": "The new username",
+                      "example": "brian"
+                    },
+                    "blabName": {
+                      "type": "string",
+                      "description": "The new blab name",
+                      "example": "Stydvin"
+                    },
+                    "realName": {
+                      "type": "string",
+                      "description": "The new real name",
+                      "example": "StuKevClyde"
+                    }
                   }
                 }
               }
             }
-          ],
+          },
           "responses": {
             "200": {
               "description": "Database changed successfully"
@@ -480,39 +647,42 @@
           }
         }
       },
-      "/users/register": {
+      "/register": {
         "post": {
-          "description": "Register user",
+          "summary": "register a user",
           "tags": [
             "users"
           ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "User Register",
-              "description": "User Register",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "username",
-                  "pasword"
-                ],
-                "properties": {
-                  "username": {
-                    "type": "string",
-                    "example": "myUsername"
-                  },
-                  "password": {
-                    "type": "string",
-                    "example": "myPassword"
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string",
+                      "description": "The new username",
+                      "example": "carst"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "new password",
+                      "example": "carst"
+                    },
+                    "cpassword": {
+                      "type": "string",
+                      "description": "confirmed password",
+                      "example": "carst"
+                    }
                   }
                 }
               }
             }
-          ],
+          },
           "responses": {
             "200": {
-              "description": "Resource added successfully"
+              "description": "Database changed successfully"
             },
             "400": {
               "description": "Bad request"
@@ -523,13 +693,12 @@
           }
         }
       },
-      "/users/reset": {
+      "/reset": {
         "get": {
           "description": "reset database",
           "tags": [
             "users"
           ],
-          "parameters": "none",
           "responses": {
             "200": {
               "description": "Resource accessed successfully"
@@ -543,16 +712,52 @@
           }
         }
       },
-      "/users/getUsers": {
+      "/getUsers": {
         "get": {
           "description": "Get all users",
           "tags": [
             "users"
           ],
-          "parameters": "none",
           "responses": {
             "200": {
-              "description": "Resource accessed successfully"
+              "description": "Resource accessed successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "username": {
+                              "type": "string",
+                              "description": "The username.",
+                              "example": "april"
+                            },
+                            "real_name": {
+                              "type": "string",
+                              "description": "user real name",
+                              "example": "April Sauer"
+                            },
+                            "blab_name": {
+                              "type": "string",
+                              "description": "The user blab name.",
+                              "example": "April"
+                            },
+                            "created_at": {
+                              "type": "string",
+                              "description": "the datetime user was created.",
+                              "example": "2024-08-05T19:58:03.000Z"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             },
             "400": {
               "description": "Bad request"
@@ -563,13 +768,12 @@
           }
         }
       },
-      "/users/getUser": {
+      "/getUser": {
         "get": {
           "description": "Get get specified user",
           "tags": [
             "users"
           ],
-          "parameters": "none",
           "responses": {
             "200": {
               "description": "Resource accessed successfully"
@@ -583,39 +787,37 @@
           }
         }
       },
-      "/users/login": {
+      "/login": {
         "post": {
-          "description": "Get all users",
+          "summary": "login a user",
           "tags": [
             "users"
           ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "User Login",
-              "description": "User Login",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "username",
-                  "password"
-                ],
-                "properties": {
-                  "username": {
-                    "type": "string",
-                    "example": "myUsername"
-                  },
-                  "password": {
-                    "type": "string",
-                    "example": "myPassword"
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string",
+                      "description": "The new username",
+                      "example": "brian"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "new password",
+                      "example": "brian"
+                    }
                   }
                 }
               }
             }
-          ],
+          },
           "responses": {
             "200": {
-              "description": "Resource added successfully"
+              "description": "Database changed successfully"
             },
             "400": {
               "description": "Bad request"
