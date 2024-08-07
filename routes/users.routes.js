@@ -8,7 +8,7 @@ var router = express.Router();
 
 /**
  * @swagger
- * /getBlabbers:
+ * /users/getBlabbers:
  *   get:
  *     description: get Blabbers
  *     tags:
@@ -55,7 +55,7 @@ router.get("/getBlabbers", checkUser, usersController.getBlabbers);
 
 /**
  * @swagger
- * /ignore:
+ * /users/ignore:
  *   post:
  *     summary: ignore a user
  *     tags:
@@ -83,7 +83,7 @@ router.post("/ignore", checkUser, usersController.ignore);
 
 /**
  * @swagger
- * /listen:
+ * /users/listen:
  *   post:
  *     summary: listen to a user
  *     tags:
@@ -111,7 +111,7 @@ router.post("/listen", checkUser, usersController.listen);
 
 /**
  * @swagger
- * /getProfileInfo:
+ * /users/getProfileInfo:
  *   get:
  *       description: Get a User's information
  *       tags:
@@ -178,7 +178,7 @@ router.get("/getProfileInfo", checkUser, usersController.getProfileInfo);
  
 /**
  *  @swagger
- *  /getEvents:
+ *  /users/getEvents:
  *    get:
  *      description: Get a User's event history
  *      tags:
@@ -206,7 +206,7 @@ router.get("/getEvents", checkUser, usersController.getEvents);
 
 /**
  * @swagger
- * /updateProfile:
+ * /users/updateProfile:
  *   post:
  *     summary: update the user's profile
  *     tags:
@@ -242,7 +242,7 @@ router.post("/updateProfile", checkUser, usersController.updateProfile);
  
 /**
  * @swagger
- * /register:
+ * /users/register:
  *   post:
  *     summary: register a user
  *     tags:
@@ -278,7 +278,7 @@ router.post("/register", usersController.register);
 
 /**
  * @swagger
- * /reset:
+ * /users/reset:
  *  get:
  *      description: reset database
  *      tags:
@@ -296,7 +296,7 @@ router.get("/reset", resetController.reset);
  
 /**
  * @swagger
- * /getUsers:
+ * /users/getUsers:
  *   get:
  *     description: Get all users
  *     tags:
@@ -341,7 +341,7 @@ router.get("/getUsers", checkUser, usersController.getUsers);
 
 /**
  *  @swagger
- *  /getUser:
+ *  /users/getUser:
  *    get:
  *      description: Get get specified user
  *      tags:
@@ -358,7 +358,7 @@ router.get("/getUser", checkUser, usersController.getUser);
 
 /**
  * @swagger
- * /login:
+ * /users/login:
  *   post:
  *     summary: login a user
  *     tags:

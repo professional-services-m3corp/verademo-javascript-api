@@ -7,7 +7,7 @@ var router = express.Router();
 
 /**
  * @swagger
- * /getBlabsForMe:
+ * /posts/getBlabsForMe:
  *   get:
  *     description: Get blabs written for user
  *     tags:
@@ -25,7 +25,7 @@ router.get("/getBlabsForMe", checkUser, postsController.getBlabsForMe);
 
 /**
  * @swagger
- * /getBlabsByMe:
+ * /posts/getBlabsByMe:
  *   get:
  *    description: Get blabs written by user
  *    tags:
@@ -42,7 +42,7 @@ router.get("/getBlabsByMe", checkUser, postsController.getBlabsByMe);
 
 /**
  * @swagger
- * /addBlab:
+ * /posts/addBlab:
  *   post:
  *     summary: add a blab to db
  *     tags:
@@ -70,7 +70,7 @@ router.post("/addBlab", checkUser, postsController.addBlab);
 
 /**
 @swagger
- * /getAllBlabs:
+ * /posts/getAllBlabs:
  *   get:
  *     description: Get all blabs
  *     tags:
@@ -110,7 +110,7 @@ router.get("/getAllBlabs", checkUser, postsController.getAllBlabs);
 
 /**
  * @swagger
- * /addBlabComment:
+ * /posts/addBlabComment:
  *   post:
  *     summary: add a comment to blab
  *     tags:
@@ -142,7 +142,7 @@ router.post("/addBlabComment", checkUser, postsController.addBlabComment );
 
 /**
  * @swagger
- * /getBlabComments:
+ * /posts/getBlabComments:
  *   post:
  *     description: Get all blabs
  *     tags:
@@ -192,7 +192,7 @@ router.post("/getBlabComments", checkUser, postsController.getBlabComments);
 
 /**
  * @swagger
- *   /deleteBlab:
+ *   /posts/deleteBlab:
  *     delete:
  *        description: Used to delete Blab
  *        tags:

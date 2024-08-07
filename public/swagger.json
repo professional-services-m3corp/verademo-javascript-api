@@ -87,7 +87,7 @@
           }
         }
       },
-      "/getBlabsForMe": {
+      "/posts/getBlabsForMe": {
         "get": {
           "description": "Get blabs written for user",
           "tags": [
@@ -106,7 +106,7 @@
           }
         }
       },
-      "/getBlabsByMe": {
+      "/posts/getBlabsByMe": {
         "get": {
           "description": "Get blabs written by user",
           "tags": [
@@ -125,7 +125,7 @@
           }
         }
       },
-      "/addBlab": {
+      "/posts/addBlab": {
         "post": {
           "summary": "add a blab to db",
           "tags": [
@@ -161,7 +161,7 @@
           }
         }
       },
-      "/getAllBlabs": {
+      "/posts/getAllBlabs": {
         "get": {
           "description": "Get all blabs",
           "tags": [
@@ -212,7 +212,7 @@
           }
         }
       },
-      "/addBlabComment": {
+      "/posts/addBlabComment": {
         "post": {
           "summary": "add a comment to blab",
           "tags": [
@@ -253,7 +253,7 @@
           }
         }
       },
-      "/getBlabComments": {
+      "/posts/getBlabComments": {
         "post": {
           "description": "Get all blabs",
           "tags": [
@@ -321,7 +321,7 @@
           }
         }
       },
-      "/deleteBlab": {
+      "/posts/deleteBlab": {
         "delete": {
           "description": "Used to delete Blab",
           "tags": [
@@ -349,7 +349,7 @@
           }
         }
       },
-      "/getBlabbers": {
+      "/users/getBlabbers": {
         "get": {
           "description": "get Blabbers",
           "tags": [
@@ -410,7 +410,7 @@
           }
         }
       },
-      "/ignore": {
+      "/users/ignore": {
         "post": {
           "summary": "ignore a user",
           "tags": [
@@ -446,7 +446,7 @@
           }
         }
       },
-      "/listen": {
+      "/users/listen": {
         "post": {
           "summary": "listen to a user",
           "tags": [
@@ -482,7 +482,7 @@
           }
         }
       },
-      "/getProfileInfo": {
+      "/users/getProfileInfo": {
         "get": {
           "description": "Get a User's information",
           "tags": [
@@ -566,7 +566,7 @@
           }
         }
       },
-      "/getEvents": {
+      "/users/getEvents": {
         "get": {
           "description": "Get a User's event history",
           "tags": [
@@ -601,7 +601,7 @@
           }
         }
       },
-      "/updateProfile": {
+      "/users/updateProfile": {
         "post": {
           "summary": "update the user's profile",
           "tags": [
@@ -647,7 +647,7 @@
           }
         }
       },
-      "/register": {
+      "/users/register": {
         "post": {
           "summary": "register a user",
           "tags": [
@@ -693,7 +693,7 @@
           }
         }
       },
-      "/reset": {
+      "/users/reset": {
         "get": {
           "description": "reset database",
           "tags": [
@@ -712,7 +712,7 @@
           }
         }
       },
-      "/getUsers": {
+      "/users/getUsers": {
         "get": {
           "description": "Get all users",
           "tags": [
@@ -768,7 +768,7 @@
           }
         }
       },
-      "/getUser": {
+      "/users/getUser": {
         "get": {
           "description": "Get get specified user",
           "tags": [
@@ -787,7 +787,7 @@
           }
         }
       },
-      "/login": {
+      "/users/login": {
         "post": {
           "summary": "login a user",
           "tags": [
