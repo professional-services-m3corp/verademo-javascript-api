@@ -10,7 +10,9 @@ Dynamic Findings
 <img src="https://github.com/veracode-demo-labs/verademo-javascript-api/blob/main/pictures/dynamic_findings.png" width="800" />  
   
 SCA Findings  
-<img src="https://github.com/veracode-demo-labs/verademo-javascript-api/blob/main/pictures/sca_findings.png" width="800" />  
+<img src="https://github.com/veracode-demo-labs/verademo-javascript-api/blob/main/pictures/sca_findings.png" width="800" /> 
+
+Swagger and Postman Collection Files: [Inside public folder](https://github.com/veracode-demo-labs/verademo-javascript-api/tree/main/public)
   
 ## How to build and run
 There are two ways to run this API: using **docker compose**, or **running locally**. This API is most easily run as a docker multi-container app with the API and database being the two sub-containers. The database is configured in ``db.config.js`` and currently points to a MySQL db container.
