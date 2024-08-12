@@ -17,7 +17,7 @@ const swaggerOption = {
   swaggerDefinition: (swaggerJsdoc.Options = {
     openapi: "3.0.0",
     info: {
-      title: "Verdemo-API",
+      title: "Verademo-API",
       description: "API documentation",
       contact: {
         name: "Developer",

@@ -20,7 +20,7 @@ There are two ways to run this API: using **docker compose**, or **running local
 ### Docker (Recommended)
 - Docker is a prerequisite. If not downloaded, [download here](https://www.docker.com/products/docker-desktop/).
 - Run ``docker compose up -d``
-- Visit ``{host}/users/reset`` (no authentication required) 
+- Visit ``{host}/users/reset`` (no authentication required, default {host} is localhost) 
 
 ### Local
 - Node.js is a prerequisite. [Download here](https://nodejs.org/en/download/package-manager).
