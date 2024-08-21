@@ -62,7 +62,9 @@ const db = createPool({
   database: "blab",
   connectionLimit: 10,
 });
-```  
+```
+
+This API can also be run via DemoLabs
   
 ## Functionality  
 The API is using token based authentication. You are required to send an authentication header with every request to this API.  
