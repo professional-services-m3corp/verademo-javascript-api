@@ -1,0 +1,14 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  packaging:
+    name: packaging for veracode scan
+    uses: professional-services-m3corp/verademo-javascript-api/.github/workflows/veracode-package-template.yml@main
+    with:
+      javascriptTypescript: true
