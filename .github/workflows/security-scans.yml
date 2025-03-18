@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  packaging:
+  call-package-template:
     name: prepare packaging for Veracode scan
     uses: professional-services-m3corp/security-templates/.github/workflows/veracode-package-template.yml@main
     with:
