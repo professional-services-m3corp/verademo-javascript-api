@@ -8,7 +8,7 @@ on:
 
 jobs:
   packaging:
-    name: packaging for veracode scan
-    uses: professional-services-m3corp/verademo-javascript-api/.github/workflows/veracode-package-template.yml@main
+    name: prepare packaging for veracode scan
+    uses: professional-services-m3corp/security-templates/.github/workflows/veracode-package-template.yml@main
     with:
       javascriptTypescript: true
