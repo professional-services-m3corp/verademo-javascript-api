@@ -12,6 +12,7 @@ jobs:
 
   pipeline-scan:
     name: veracode sast pipeline scan
+    needs: [ call-package-template ]
     uses: professional-services-m3corp/security-templates/.github/workflows/veracode-pipeline-scan.yml@main
     with:
       policyName: Veracode Recommended High
