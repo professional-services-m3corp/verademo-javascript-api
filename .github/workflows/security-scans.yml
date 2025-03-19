@@ -9,3 +9,10 @@ jobs:
     uses: professional-services-m3corp/security-templates/.github/workflows/veracode-package-template.yml@main
     with:
       javascriptTypescript: true
+
+  pipeline-scan:
+    name: veracode sast pipeline scan
+    uses: professional-services-m3corp/security-templates/.github/workflows/veracode-pipeline-scan.yml@main
+    with:
+      policyName: Veracode Recommended High
+      failBuild: false
