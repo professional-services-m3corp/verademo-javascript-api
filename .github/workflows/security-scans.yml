@@ -17,3 +17,4 @@ jobs:
     with:
       policyName: Veracode Recommended High
       failBuild: false
+    secrets: inherit
