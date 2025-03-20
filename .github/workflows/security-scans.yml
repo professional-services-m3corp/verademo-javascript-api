@@ -15,6 +15,7 @@ jobs:
     needs: [ call-package-template ]
     uses: professional-services-m3corp/security-templates/.github/workflows/veracode-pipeline-scan.yml@main
     with:
+      veracodeArtifact: ./veracode_artifact_directory/upload.tar.gz
       policyName: Veracode Recommended High
       failBuild: false
     secrets: inherit
